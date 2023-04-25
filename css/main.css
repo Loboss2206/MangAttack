@@ -1,0 +1,166 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+h1 {
+    margin: 0;
+}
+
+main {
+    background-image: url('../img/wallpaper.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.backgroundImg {
+    z-index: -1;
+    position: relative;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+}
+
+/* styles pour la navigation */
+
+nav {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav li {
+    margin: 0 10px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+.img-manga {
+    width: 10vw;
+    height: 15vw;
+}
+
+/* styles pour les mangas en vedette */
+
+#featured {
+    padding: 20px;
+    margin: auto;
+}
+
+#features .manga {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+#featured h2 {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 0 0 20px;
+}
+
+#grid-featured {
+    margin: auto;
+    padding: 20px;
+    background-color: #b0a9a9;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-gap: 10px;
+}
+
+#grid-featured a {
+    text-decoration: none;
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#grid-featured h3 {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 10px 0 0;
+}
+
+#grid-featured p {
+    margin: 5px 0 0;
+    font-size: 18px;
+}
+
+/* styles pour les catégories */
+
+#categories {
+    padding: 20px;
+}
+
+#categories h2 {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 0 0 20px;
+}
+
+#categories ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#categories li {
+    flex-basis: 24%;
+    margin-right: 2%;
+    margin-bottom: 20px;
+}
+
+#categories li:last-child {
+    margin-right: 0;
+}
+
+#categories a {
+    display: block;
+    text-decoration: none;
+    color: #000;
+    background-color: #f8f8f8;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#categories a:hover {
+    background-color: #333;
+    color: #fff;
+}

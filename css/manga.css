@@ -1,0 +1,31 @@
+#grid-presentation {
+    margin: auto;
+    padding: 20% 20px;
+    background-color: #b0a9a9;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    grid-gap: 10px;
+}
+
+#text-presentation a {
+    text-decoration: none;
+    color: #000;
+}
+
+#grid-presentation h3 {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 10px 0 0;
+}
+
+#grid-presentation p {
+    margin: 5px 0 0;
+    font-size: 18px;
+}
+
+#img-presentation {
+    width: 25vw;
+    height: 35vw;
+    margin: auto;
+}
