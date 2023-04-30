@@ -3,8 +3,8 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-include_once 'fct.php';
-include_once 'connectDB.php';
+include_once 'phpUtils/fct.php';
+include_once 'phpUtils/connectDB.php';
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +19,7 @@ include_once 'connectDB.php';
 <body>
     <!-- Header -->
     <?php
-    include_once 'header.php';
+    include_once 'phpUtils/header.php';
     ?>
 
     <!-- Main -->
@@ -60,7 +60,7 @@ include_once 'connectDB.php';
 
     <!-- Footer -->
     <?php
-    include_once 'footer.php';
+    include_once 'phpUtils/footer.php';
     ?>
 </body>
 

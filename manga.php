@@ -1,4 +1,6 @@
 <?php
+include_once 'phpUtils/connectDB.php';
+
 if (!isset($_SESSION)) {
     session_start();
 }
@@ -20,7 +22,7 @@ if (!isset($_SESSION)) {
 <body>
     <!-- Header -->
     <?php
-    include_once 'header.php';
+    include_once 'phpUtils/header.php';
     ?>
 
     <!-- Main -->
@@ -29,8 +31,6 @@ if (!isset($_SESSION)) {
             <img id="img-presentation" src="https://tse3.mm.bing.net/th?id=OIP.Bt2DdPiv8KvwJVCmqDk7LgHaLf&pid=Api&P=0" alt="Manga 1">
             <div id="text-presentation">
                 <?php
-                include_once 'connectDB.php';
-
                 $resultTome = $conn->prepare("SELECT * FROM tome WHERE id = " . $_GET['id'] . " ORDER BY id DESC LIMIT 1");
                 $resultTome->execute();
                 $resultTome = $resultTome->fetch(PDO::FETCH_NUM);
@@ -64,7 +64,7 @@ if (!isset($_SESSION)) {
 
     <!-- Footer -->
     <?php
-    include_once 'footer.php';
+    include_once 'phpUtils/footer.php';
     ?>
 </body>
 

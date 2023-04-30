@@ -1,6 +1,6 @@
 <?php
-include_once 'fct.php';
-include_once 'connectDB.php';
+include_once 'phpUtils/fct.php';
+include_once 'phpUtils/connectDB.php';
 
 if (!isset($_SESSION)) {
     session_start();
@@ -41,7 +41,7 @@ if (isset($_POST['identifier'], $_POST['password'])) {
 <body>
     <!-- Header -->
     <?php
-    include_once 'header.php';
+    include_once 'phpUtils/header.php';
     ?>
 
     <!-- Main -->
@@ -69,7 +69,7 @@ if (isset($_POST['identifier'], $_POST['password'])) {
                 <a href="kart.php">
                     <p>Votre Panier</p>
                 </a>
-                <a href="logout.php">
+                <a href="phpUtils/logout.php">
                     <p>Se déconnecter</p>
                 </a>
             </div>
@@ -97,7 +97,7 @@ if (isset($_POST['identifier'], $_POST['password'])) {
 
     <!-- Footer -->
     <?php
-    include_once 'footer.php';
+    include_once 'phpUtils/footer.php';
     ?>
 </body>
 

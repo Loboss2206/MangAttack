@@ -2,4 +2,4 @@
 session_start();
 session_destroy();
 $_SESSION['loggedin'] = 0;
-header("Location: profile.php");
+header("Location: ../profile.php");

@@ -10,6 +10,7 @@ DROP TABLE IF EXISTS genre;
 DROP TABLE IF EXISTS manga_genre;
 DROP TABLE IF EXISTS client;
 DROP TABLE IF EXISTS panier;
+DROP TABLE IF EXISTS panier_tome;
 
 ## CREATE TABLE
 
@@ -65,8 +66,17 @@ CREATE TABLE client (
     );
 
 CREATE TABLE panier (
+    id INT PRIMARY KEY AUTO_INCREMENT,
     montantTotal FLOAT
     );
+
+CREATE TABLE panier_tome (
+    id_panier INT,
+    id_tome INT,
+    quantite INT,
+    CONSTRAINT fk_panier FOREIGN KEY (id_panier) REFERENCES panier(id),
+    CONSTRAINT fk_tome FOREIGN KEY (id_tome) REFERENCES tome(id)
+)
 
 ## INSERT VALUES
 

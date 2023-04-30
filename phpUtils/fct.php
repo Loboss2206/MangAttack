@@ -46,12 +46,3 @@ function test_email($txt)
         return (0);
     else return (1);
 }
-
-function return_id($lignes, $user)
-{
-    for ($i = 0; $i < sizeof($lignes); $i++) {
-        if ($user == $lignes[$i][0]) {
-            return $lignes[$i][2];
-        }
-    }
-}

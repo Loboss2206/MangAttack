@@ -1,8 +1,40 @@
 <?php
-include_once 'fct.php';
-include_once 'connectDB.php';
+include_once 'phpUtils/fct.php';
+include_once 'phpUtils/connectDB.php';
+
 if (!isset($_SESSION)) {
     session_start();
+}
+
+if (isset($_POST['firstName'], $_POST['lastName'], $_POST['mail'], $_POST['password2'], $_POST['address'], $_POST['postalCode'])) {
+    if (!empty($_POST['firstName']) && !empty($_POST['lastName']) && !empty($_POST['mail']) && !empty($_POST['password2']) && !empty($_POST['address']) && !empty($_POST['postalCode'])) {
+        if (test_email($_POST['mail'])) {
+            if (!exist_userBDD($_POST['mail'])) {
+                $firstName = $_POST['firstName'];
+                $lastName = $_POST['lastName'];
+                $email = $_POST['mail'];
+                $password2 = $_POST['password2'];
+                $address = $_POST['address'];
+                $postalCode = $_POST['postalCode'];
+
+                sauvegarderClient($email, $password2, $firstName, $lastName, $address, $postalCode);
+
+                $_SESSION['identifier'] = $email;
+                $_SESSION['password'] = $password2;
+                $_SESSION['loggedin'] = 1;
+
+                echo '<script> alert("Inscription réussie"); </script>';
+                header("Location: profile.php");
+                exit;
+            } else {
+                echo '<script> alert("Adresse mail déjà utilisée"); </script>';
+            }
+        } else {
+            echo '<script> alert("Adresse mail non conforme"); </script>';
+        }
+    } else {
+        echo '<script> alert("Veuillez remplir tous les champs"); </script>';
+    }
 }
 ?>
 
@@ -17,42 +49,10 @@ if (!isset($_SESSION)) {
 </head>
 
 <body>
-    <?php
-    if (isset($_POST['firstName'], $_POST['lastName'], $_POST['mail'], $_POST['password2'], $_POST['address'], $_POST['postalCode'])) {
-        if (!empty($_POST['firstName']) && !empty($_POST['lastName']) && !empty($_POST['mail']) && !empty($_POST['password2']) && !empty($_POST['address']) && !empty($_POST['postalCode'])) {
-            if (test_email($_POST['mail'])) {
-                if (!exist_userBDD($_POST['mail'])) {
-                    $firstName = $_POST['firstName'];
-                    $lastName = $_POST['lastName'];
-                    $email = $_POST['mail'];
-                    $password2 = $_POST['password2'];
-                    $address = $_POST['address'];
-                    $postalCode = $_POST['postalCode'];
-
-                    sauvegarderClient($email, $password2, $firstName, $lastName, $address, $postalCode);
-
-                    $_SESSION['identifier'] = $email;
-                    $_SESSION['password'] = $password2;
-                    $_SESSION['loggedin'] = 1;
-
-                    echo '<script> alert("Inscription réussie"); </script>';
-                    header("Location: profile.php");
-                    exit;
-                } else {
-                    echo '<script> alert("Adresse mail déjà utilisée"); </script>';
-                }
-            } else {
-                echo '<script> alert("Adresse mail non conforme"); </script>';
-            }
-        } else {
-            echo '<script> alert("Veuillez remplir tous les champs"); </script>';
-        }
-    }
-    ?>
 
     <!-- Header -->
     <?php
-    include_once 'header.php';
+    include_once 'phpUtils/header.php';
     ?>
 
     <!-- Main -->
@@ -90,7 +90,7 @@ if (!isset($_SESSION)) {
 
     <!-- Footer -->
     <?php
-    include_once 'footer.php';
+    include_once 'phpUtils/footer.php';
     ?>
 </body>
 
