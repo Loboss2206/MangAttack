@@ -39,6 +39,11 @@ main {
     height: 100vh;
 }
 
+.title-section {
+    color: white;
+
+}
+
 /* styles pour la navigation */
 
 nav {

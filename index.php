@@ -1,3 +1,12 @@
+<?php
+if (!isset($_SESSION)) {
+    session_start();
+}
+
+include_once 'fct.php';
+include_once 'connectDB.php';
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -15,72 +24,26 @@
 
     <!-- Main -->
     <main>
-        <?php
-
-        $host = 'localhost';
-        $dbname = 'mangattack';
-        $username = 'loboss2206';
-        $password = 'Yoloswag06*';
-
-        try {
-            $conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-        } catch (PDOException $e) {
-            echo 'Connexion échouée : ' . $e->getMessage();
-            exit;
-        }
-        ?>
         <section id="featured">
-            <h2>Les Nouveautés</h2>
+            <h2 class="title-section">Les Nouveautés</h2>
             <div id="grid-featured">
                 <?php
-                $result = $conn->prepare("SELECT * FROM tome ORDER BY id DESC LIMIT 4");
-                $result->execute();
+                $resultTomes = $conn->prepare("SELECT * FROM tome ORDER BY id ASC LIMIT 15");
+                $resultTomes->execute();
 
-                while ($row = $result->fetch(PDO::FETCH_NUM)) {
+                while ($row = $resultTomes->fetch(PDO::FETCH_NUM)) {
+                    $resultMangaName = $conn->prepare("SELECT nom FROM manga WHERE id = " . $row[2] . " ORDER BY id DESC LIMIT 1");
+                    $resultMangaName->execute();
+                    $resultMangaName = $resultMangaName->fetch(PDO::FETCH_NUM);
+
                     echo
-                    '<a href="#" class="manga">
-                        <img class="img-manga" src="https://tse3.mm.bing.net/th?id=OIP.Bt2DdPiv8KvwJVCmqDk7LgHaLf&pid=Api&P=0" alt="Manga 1">
-                        <h3>Tome ' . $row[2] . ' - ' . 'titre' . '</h3>
-                        <p>Prix : ' . $row[3] . '€</p>
+                    '<a href="manga.php?id=' . $row[0] . '" class="manga">
+                        <img class="img-manga" src="' . $row[6] . '" alt="Manga 1">
+                        <h3>Tome ' . $row[1] . ' - ' . $resultMangaName[0] . '</h3>
+                        <p>Prix : ' . $row[4] . '€</p>
                     </a>';
                 }
                 ?>
-
-                <a href="manga.php" class="manga">
-                    <img class="img-manga" src="https://tse3.mm.bing.net/th?id=OIP.Bt2DdPiv8KvwJVCmqDk7LgHaLf&pid=Api&P=0" alt="Manga 1">
-                    <h3>Nom du Manga 1</h3>
-                    <p>Prix : 10€</p>
-                </a>
-
-                <a href="#" class="manga">
-                    <img class="img-manga" src="https://tse3.mm.bing.net/th?id=OIP.Bt2DdPiv8KvwJVCmqDk7LgHaLf&pid=Api&P=0" alt="Manga 2">
-                    <h3>Nom du Manga 2</h3>
-                    <p>Prix : 15€</p>
-                </a>
-
-                <a href="#" class="manga">
-                    <img class="img-manga" src="https://tse3.mm.bing.net/th?id=OIP.Bt2DdPiv8KvwJVCmqDk7LgHaLf&pid=Api&P=0" alt="Manga 3">
-                    <h3>Nom du Manga 3</h3>
-                    <p>Prix : 12€</p>
-                </a>
-
-                <a href="#" class="manga">
-                    <img class="img-manga" src="https://tse3.mm.bing.net/th?id=OIP.Bt2DdPiv8KvwJVCmqDk7LgHaLf&pid=Api&P=0" alt="Manga 1">
-                    <h3>Nom du Manga 1</h3>
-                    <p>Prix : 10€</p>
-                </a>
-
-                <a href="#" class="manga">
-                    <img class="img-manga" src="https://tse3.mm.bing.net/th?id=OIP.Bt2DdPiv8KvwJVCmqDk7LgHaLf&pid=Api&P=0" alt="Manga 2">
-                    <h3>Nom du Manga 2</h3>
-                    <p>Prix : 15€</p>
-                </a>
-
-                <a href="#" class="manga">
-                    <img class="img-manga" src="https://tse3.mm.bing.net/th?id=OIP.Bt2DdPiv8KvwJVCmqDk7LgHaLf&pid=Api&P=0" alt="Manga 3">
-                    <h3>Nom du Manga 3</h3>
-                    <p>Prix : 12€</p>
-                </a>
             </div>
         </section>
         <section id="categories">

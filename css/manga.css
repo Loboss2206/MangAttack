@@ -1,11 +1,12 @@
 #grid-presentation {
     margin: auto;
-    padding: 20% 20px;
-    background-color: #b0a9a9;
+    padding: 20px 20%;
+    background-color: #f14040;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: 1fr;
     grid-gap: 10px;
+    align-items: center;
 }
 
 #text-presentation a {
@@ -28,4 +29,35 @@
     width: 25vw;
     height: 35vw;
     margin: auto;
+}
+
+#addToCart {
+    width: 12vw;
+    height: 4vw;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+}
+
+#buttonCart {
+    margin-top: 2px;
+    padding: 0.5vw;
+    grid-column: span 3;
+}
+
+#buttonMinus {
+    margin-right: 2px;
+}
+
+#buttonPlus {
+    margin-left: 2px;
+}
+
+.buttonChange {
+    padding: 0.5vw 1vw;
+    border: #000 2px solid;
+}
+
+#inputQuantity {
+    width: 10vw;
 }
