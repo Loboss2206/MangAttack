@@ -67,7 +67,8 @@ CREATE TABLE client (
 
 CREATE TABLE panier (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    montantTotal FLOAT
+    mail_client VARCHAR(128),
+    CONSTRAINT fk_client FOREIGN KEY (mail_client) REFERENCES client(mail)
     );
 
 CREATE TABLE panier_tome (
@@ -76,7 +77,7 @@ CREATE TABLE panier_tome (
     quantite INT,
     CONSTRAINT fk_panier FOREIGN KEY (id_panier) REFERENCES panier(id),
     CONSTRAINT fk_tome FOREIGN KEY (id_tome) REFERENCES tome(id)
-)
+);
 
 ## INSERT VALUES
 
@@ -104,4 +105,6 @@ VALUES
 (2, 1, "Le pont vers la paix", 7.99, 12, "https://tse3.mm.bing.net/th?id=OIP.Bt2DdPiv8KvwJVCmqDk7LgHaLf&pid=Api&P=0");
 
 INSERT INTO client (mail, motDePasse, nom, prenom, adresse, codePostal)
-VALUES ("philou225@gmail.com","Yoloswag225","Philippe","Bouillon","90 rue de la Paix", 95600)
+VALUES ("philou225@gmail.com","Yoloswag225","Philippe","Bouillon","90 rue de la Paix", 95600);
+
+INSERT INTO panier (mail_client) VALUES ("philou225@gmail.com");
