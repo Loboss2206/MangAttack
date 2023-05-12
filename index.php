@@ -14,9 +14,15 @@ include_once 'phpUtils/connectDB.php';
     <meta charset="UTF-8">
     <title>Mangattack</title>
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/index.css">
 </head>
 
 <body>
+    <div class="quoteContainer">
+        <div id="quote"></div>
+        <div id="author"></div>
+    </div>
+
     <!-- Header -->
     <?php
     include_once 'phpUtils/header.php';
@@ -28,17 +34,17 @@ include_once 'phpUtils/connectDB.php';
             <h2 class="title-section">Les Nouveautés</h2>
             <div id="grid-featured">
                 <?php
-                $resultTomes = $conn->prepare("SELECT * FROM tome ORDER BY id ASC LIMIT 15");
-                $resultTomes->execute();
+                $resultVolumes = $conn->prepare("SELECT * FROM volume ORDER BY id ASC LIMIT 15");
+                $resultVolumes->execute();
 
-                while ($row = $resultTomes->fetch(PDO::FETCH_NUM)) {
-                    $resultMangaName = $conn->prepare("SELECT nom FROM manga WHERE id = " . $row[2] . " ORDER BY id DESC LIMIT 1");
+                while ($row = $resultVolumes->fetch(PDO::FETCH_NUM)) {
+                    $resultMangaName = $conn->prepare("SELECT name FROM manga WHERE id = " . $row[2] . " ORDER BY id DESC LIMIT 1");
                     $resultMangaName->execute();
                     $resultMangaName = $resultMangaName->fetch(PDO::FETCH_NUM);
 
                     echo
                     '<a href="manga.php?id=' . $row[0] . '" class="manga">
-                        <img class="img-manga" src="' . $row[6] . '" alt="Manga 1">
+                        <img class="img-manga" src="' . $row[8] . '" alt="Manga 1">
                         <h3>Tome ' . $row[1] . ' - ' . $resultMangaName[0] . '</h3>
                         <p>Prix : ' . $row[4] . '€</p>
                     </a>';
@@ -47,13 +53,15 @@ include_once 'phpUtils/connectDB.php';
             </div>
         </section>
         <section id="categories">
-            <h2>Catégories</h2>
+            <h2 class="title-section">Les Catégories</h2>
             <ul>
-                <li><a href="#">Shonen</a></li>
-                <li><a href="#">Shojo</a></li>
-                <li><a href="#">Seinen</a></li>
-                <li><a href="#">Josei</a></li>
-                <li><a href="#">Kodomo</a></li>
+                <?php
+                $resultCategories = $conn->prepare("SELECT * FROM category");
+                $resultCategories->execute();
+                foreach ($resultCategories as $row) {
+                    echo '<li><a href="#">' . $row['name'] . '</a></li>';
+                }
+                ?>
             </ul>
         </section>
     </main>
@@ -62,6 +70,8 @@ include_once 'phpUtils/connectDB.php';
     <?php
     include_once 'phpUtils/footer.php';
     ?>
+
+    <script src="js/api.js" type="module"></script>
 </body>
 
 </html>

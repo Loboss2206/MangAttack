@@ -55,7 +55,7 @@ if (isset($_POST['identifier'], $_POST['password'])) {
                 <div id="profileInfo">
                     <h2>Informations personnelles</h2>';
 
-            $resultUser = $conn->prepare("SELECT * FROM client WHERE mail = '" . $_SESSION['identifier'] . "' AND motDePasse = '" . $_SESSION['password'] . "'");
+            $resultUser = $conn->prepare("SELECT * FROM user WHERE mail = '" . $_SESSION['identifier'] . "' AND password = '" . $_SESSION['password'] . "'");
             $resultUser->execute();
             $resultUser = $resultUser->fetch(PDO::FETCH_NUM);
 

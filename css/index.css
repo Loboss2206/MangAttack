@@ -1,0 +1,90 @@
+/* styles pour les mangas en vedette */
+
+#featured {
+    padding: 20px;
+    margin: auto;
+}
+
+#features .manga {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+#featured h2 {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 0 0 20px;
+}
+
+#grid-featured {
+    margin: auto;
+    padding: 20px;
+    background-color: #b0a9a9;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-gap: 10px;
+}
+
+#grid-featured a {
+    text-decoration: none;
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#grid-featured h3 {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 10px 0 0;
+}
+
+#grid-featured p {
+    margin: 5px 0 0;
+    font-size: 18px;
+}
+
+/* styles pour les catégories */
+
+#categories {
+    padding: 20px;
+}
+
+#categories h2 {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 0 0 20px;
+}
+
+#categories ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#categories li {
+    flex-basis: 24%;
+    margin-right: 2%;
+    margin-bottom: 20px;
+}
+
+#categories li:last-child {
+    margin-right: 0;
+}
+
+#categories a {
+    display: block;
+    text-decoration: none;
+    color: #000;
+    background-color: #f8f8f8;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#categories a:hover {
+    background-color: #333;
+    color: #fff;
+}

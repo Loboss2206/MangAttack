@@ -1,16 +1,16 @@
 <?php
 
-function sauvegarderClient($mail, $password2, $name, $familyName, $adress, $codePostal)
+function saveUser($mail, $password, $first_name, $last_name, $address, $postal_code)
 {
     include('connectDB.php');
 
-    $sql2 = 'INSERT INTO client (mail, motDePasse, nom, prenom, adresse, codePostal)
-    VALUES (\'' . $mail . '\',\'' . $password2 . '\',\'' . $name . '\',\'' . $familyName . '\',\'' . $adress . '\',' . $codePostal . ')';
+    $sql2 = 'INSERT INTO client (mail, password, last_name, first_name, address, postal_code)
+    VALUES (\'' . $mail . '\',\'' . $password . '\',\'' . $first_name . '\',\'' . $last_name . '\',\'' . $address . '\',' . $postal_code . ')';
     $result2 = $conn->prepare($sql2);
     $result2->execute();
 
 
-    $sql = 'INSERT INTO panier (mail_client) 
+    $sql = 'INSERT INTO cart (mail_user) 
                VALUES (\'' . $mail . '\');';
     $result = $conn->prepare($sql);
     $result->execute();
@@ -19,7 +19,7 @@ function sauvegarderClient($mail, $password2, $name, $familyName, $adress, $code
 function exist_userBDD($mail)
 {
     include('connectDB.php');
-    $result = $conn->prepare("SELECT * FROM client");
+    $result = $conn->prepare("SELECT * FROM user");
     $result->execute();
     while ($row = $result->fetch(PDO::FETCH_NUM)) {
         if ($row[0] == $mail) {
@@ -32,7 +32,7 @@ function exist_userBDD($mail)
 function user_auth($mail, $psw)
 {
     include('connectDB.php');
-    $result = $conn->prepare("SELECT * FROM client");
+    $result = $conn->prepare("SELECT * FROM user");
     $result->execute();
     while ($row = $result->fetch(PDO::FETCH_NUM)) {
         if ($row[0] == $mail && $row[1] == $psw) {
@@ -49,9 +49,9 @@ function test_email($txt)
     else return (1);
 }
 
-function addToKart($idTome, $idPanier, $quantity)
+function addToKart($idVolume, $idCart, $quantity)
 {
     include('connectDB.php');
-    $insertInKart = $conn->prepare("INSERT INTO panier_tome (id_tome, id_panier, quantite) VALUES ('" . $idTome . "','" . $idPanier . "','" . $quantity . "')");
+    $insertInKart = $conn->prepare("INSERT INTO cart_volume (id_volume, id_cart, quantity) VALUES ('" . $idVolume . "','" . $idCart . "','" . $quantity . "')");
     $insertInKart->execute();
 }

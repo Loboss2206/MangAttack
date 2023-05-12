@@ -17,7 +17,7 @@ if (isset($_POST['firstName'], $_POST['lastName'], $_POST['mail'], $_POST['passw
                 $address = $_POST['address'];
                 $postalCode = $_POST['postalCode'];
 
-                sauvegarderClient($email, $password2, $firstName, $lastName, $address, $postalCode);
+                saveUser($email, $password2, $firstName, $lastName, $address, $postalCode);
 
                 $_SESSION['identifier'] = $email;
                 $_SESSION['password'] = $password2;

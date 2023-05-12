@@ -1,12 +1,18 @@
-#grid-presentation {
+section {
+    padding: 20px;
+    margin: auto;
+}
+
+#grid {
     margin: auto;
     padding: 20px 20%;
-    background-color: #f14040;
     display: grid;
+    background-color: aqua;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: 1fr;
     grid-gap: 10px;
     align-items: center;
+    background-color: #f14040;
 }
 
 #text-presentation a {
@@ -60,4 +66,10 @@
 
 #inputQuantity {
     width: 10vw;
+}
+
+#description {
+    margin: 20px 10%;
+    padding: 20px;
+    background-color: #b0a9a9;
 }

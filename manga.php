@@ -1,5 +1,6 @@
 <?php
 include_once 'phpUtils/connectDB.php';
+include_once 'phpUtils/fct.php';
 
 if (!isset($_SESSION)) {
     session_start();
@@ -10,7 +11,7 @@ if (isset($_GET['id'])) {
 }
 
 if (isset($_SESSION['identifier'])) {
-    $resultIdKart = $conn->prepare("SELECT id FROM panier WHERE mail_client = '" . $_SESSION['identifier'] . "'");
+    $resultIdKart = $conn->prepare("SELECT id FROM cart WHERE mail_user = '" . $_SESSION['identifier'] . "'");
     $resultIdKart->execute();
     $resultIdKart = $resultIdKart->fetch(PDO::FETCH_NUM);
 } /* else {
@@ -22,10 +23,7 @@ if (isset($_POST['add_to_kart'])) {
     $tome_id = $_SESSION['tome_id'];
     $kart_id = $resultIdKart[0];
 
-    echo "iciiiiiiiiiiiii" . $quantity . " " . $tome_id . " " . $kart_id;
-
-    $stmt = $conn->prepare("INSERT INTO panier_tome (id_tome, quantite, id_panier) VALUES (" . $tome_id . "," . $quantity . "," . $kart_id . ")");
-    $stmt->execute();
+    addToKart($tome_id, $kart_id, $quantity);
 }
 ?>
 
@@ -37,9 +35,6 @@ if (isset($_POST['add_to_kart'])) {
     <title>Mangattack</title>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/manga.css">
-
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
-    <script defer="defer" src="./js/manga.js"></script>
 </head>
 
 <body>
@@ -51,10 +46,9 @@ if (isset($_POST['add_to_kart'])) {
     <!-- Main -->
     <main>
         <section id="grid-presentation">
-            <img id="img-presentation" src="https://tse3.mm.bing.net/th?id=OIP.Bt2DdPiv8KvwJVCmqDk7LgHaLf&pid=Api&P=0" alt="Manga 1">
-            <div id="text-presentation">
+            <div id="grid">
                 <?php
-                $resultTome = $conn->prepare("SELECT * FROM tome WHERE id = " . $_SESSION['tome_id'] . " ORDER BY id DESC LIMIT 1");
+                $resultTome = $conn->prepare("SELECT * FROM volume WHERE id = " . $_SESSION['tome_id'] . " ORDER BY id DESC LIMIT 1");
                 $resultTome->execute();
                 $resultTome = $resultTome->fetch(PDO::FETCH_NUM);
 
@@ -62,23 +56,20 @@ if (isset($_POST['add_to_kart'])) {
                 $resultManga->execute();
                 $resultManga = $resultManga->fetch(PDO::FETCH_NUM);
 
+                echo '
+            <img id="img-presentation" src="' . $resultTome[8] . '" alt="' . $resultManga[1] . $resultTome[1] . '">';
+                echo '<div id="text-presentation">';
+
                 echo
-                "<h2>Tome " . $resultTome[1] . " - " . $resultManga[1] . "</h2>
-                <h3>" . $resultTome[3] . "</h3>
-                <p>Auteur : " . $resultManga[2] . "</p>
-                <p>Prix : 10€</p>
+                '<h2>Tome ' . $resultTome[1] . ' - ' . $resultManga[1] . '</h2>
+                <h3>' . $resultTome[3] . '</h3>
+                <p>Auteur : ' . $resultManga[2] . '</p>
+                <p>Prix : ' . $resultTome[4] . '€</p>
                 <p>Catégorie : Shonen</p>
                 <p>Genre : Aventure</p>
-                <p>Éditeur : Glénat</p>
-                <p>Nombre de pages : 200</p>
-                <p>Disponibilité : </p>
-                <p id='etat'>En stock</p>"
-                ?>
-
-                <?php
-                $resultIdKart = $conn->prepare("SELECT id FROM panier WHERE mail_client = '" . $_SESSION['identifier'] . "'");
-                $resultIdKart->execute();
-                $resultIdKart = $resultIdKart->fetch(PDO::FETCH_NUM);
+                <p>Éditeur : ' . $resultTome[6] . '</p>
+                <p>Nombre de pages : ' . $resultTome[7] . '</p>
+                <p>Disponibilité : En stock</p>'
                 ?>
 
                 <form method="post" action="manga.php">
@@ -91,13 +82,25 @@ if (isset($_POST['add_to_kart'])) {
                 </form>
 
             </div>
+            </div>
         </section>
+        <section id="more-info">
+            <h2 class="title-section">Description</h2>
+            <div id="description">
+                <p><?php echo $resultManga[3] ?></p>
+            </div>
+        </section>
+
     </main>
 
     <!-- Footer -->
     <?php
     include_once 'phpUtils/footer.php';
     ?>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <script defer="defer" src="./js/manga.js"></script>
+    <script src="js/main.js" type="module"></script>
 </body>
 
 </html>
