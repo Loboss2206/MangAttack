@@ -87,7 +87,7 @@ if (isset($_POST['add_to_kart'])) {
         <section id="more-info">
             <h2 class="title-section">Description</h2>
             <div id="description">
-                <p><?php echo $resultManga[3] ?></p>
+                <?php echo $resultManga[3] ?>
             </div>
         </section>
 

@@ -20,7 +20,7 @@ if (!(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == 1)) {
     echo 'Mon Compte';
 }
 echo '</a></li>
-        <li><a href="#">Panier</a></li>
+        <li><a href="cart.php">Panier</a></li>
     </ul>
 </nav>
 </header>';

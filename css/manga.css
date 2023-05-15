@@ -7,7 +7,6 @@ section {
     margin: auto;
     padding: 20px 20%;
     display: grid;
-    background-color: aqua;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: 1fr;
     grid-gap: 10px;
@@ -69,7 +68,8 @@ section {
 }
 
 #description {
-    margin: 20px 10%;
-    padding: 20px;
+    margin: auto;
+    padding: 20px 10% 10px;
+    align-items: center;
     background-color: #b0a9a9;
 }

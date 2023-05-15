@@ -52,6 +52,16 @@ function test_email($txt)
 function addToKart($idVolume, $idCart, $quantity)
 {
     include('connectDB.php');
+    $resultCartVolumeCustomer = $conn->prepare("SELECT quantity FROM cart_volume WHERE id_volume = '" . $idVolume . "' AND id_cart = '" . $idCart . "'");
+    $resultCartVolumeCustomer->execute();
+    $resultCartVolumeCustomer = $resultCartVolumeCustomer->fetch(PDO::FETCH_NUM);
+
+    if ($resultCartVolumeCustomer != null) {
+        $quantity = $quantity + $resultCartVolumeCustomer[0];
+        $deleteOldId = $conn->prepare("DELETE FROM cart_volume WHERE id_volume = '" . $idVolume . "' AND id_cart = '" . $idCart . "'");
+        $deleteOldId->execute();
+    }
+
     $insertInKart = $conn->prepare("INSERT INTO cart_volume (id_volume, id_cart, quantity) VALUES ('" . $idVolume . "','" . $idCart . "','" . $quantity . "')");
     $insertInKart->execute();
 }
