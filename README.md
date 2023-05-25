@@ -19,7 +19,7 @@ CREATE TABLE volume (
     number INT,
     id_manga INT,
     name VARCHAR(256),
-    price Float,
+    price FLOAT(4,2),
     quantity INT,
     publisher VARCHAR(64),
     number_pages INT,
@@ -93,16 +93,18 @@ VALUES ("Shonen"),
 ("Kodomo");
 
 INSERT INTO manga (name, author, description)
-VALUES ("Naruto", "Masashi Kishimoto", "'Naruto' est un manga écrit et illustré par Masashi Kishimoto. L'histoire suit les aventures d'un jeune ninja nommé Naruto Uzumaki, qui rêve de devenir Hokage, le chef de son village. En cours de route, il rencontre des amis et des ennemis, et doit affronter des défis difficiles pour devenir plus fort. Le manga explore également les thèmes de l'amitié, de la famille et de la lutte contre la discrimination."),
-("One Piece", "Eiichiro Oda", "'One Piece' est un manga écrit et illustré par Eiichiro Oda. L'histoire suit les aventures de Monkey D. Luffy, un jeune pirate avec un corps en caoutchouc, qui cherche le trésor légendaire connu sous le nom de 'One Piece'. Luffy rassemble un équipage de pirates pour l'aider dans sa quête, et doit affronter des ennemis puissants pour atteindre son objectif. Le manga explore les thèmes de l'amitié, de l'aventure et de la persévérance."),
-("Attack on Titan", "Hajime Isayama", "'Attack on Titan' est un manga écrit et illustré par Hajime Isayama. L'histoire se déroule dans un monde où l'humanité doit faire face à des géants mangeurs d'hommes appelés Titans. Les survivants vivent dans une citadelle protégée par trois murs géants, mais lorsqu'un Titan géant détruit la première muraille, l'humanité est forcée de se battre pour sa survie. Le manga explore les thèmes de la survie, de la peur et de la détermination."),
-("Death Note", "Tsugumi Ohba / Takeshi Obata", "'Death Note' est un manga écrit par Tsugumi Ohba et illustré par Takeshi Obata. L'histoire suit un lycéen nommé Light Yagami, qui trouve un cahier qui permet de tuer les gens en écrivant leur nom dedans. Light décide d'utiliser le cahier pour tuer les criminels du monde, mais est poursuivi par un détective connu sous le nom de L. Le manga explore les thèmes de la justice, de la morale et de la psychologie."),
-("Fullmetal Alchemist", "Hiromu Arakawa", "'Fullmetal Alchemist' est un manga écrit et illustré par Hiromu Arakawa. L'histoire suit deux frères alchimistes, Edward et Alphonse Elric, qui cherchent une pierre légendaire pour récupérer leur corps, qui a été perdu lors d'une tentative de ressusciter leur mère. Le manga explore les thèmes de la science, de la famille et de la conséquence de nos actes."),
+VALUES ("Naruto", "Masashi Kishimoto", "Naruto est un manga écrit et illustré par Masashi Kishimoto. L'histoire suit les aventures d'un jeune ninja nommé Naruto Uzumaki, qui rêve de devenir Hokage, le chef de son village. En cours de route, il rencontre des amis et des ennemis, et doit affronter des défis difficiles pour devenir plus fort. Le manga explore également les thèmes de l'amitié, de la famille et de la lutte contre la discrimination."),
+("One Piece", "Eiichiro Oda", "One Piece est un manga écrit et illustré par Eiichiro Oda. L'histoire suit les aventures de Monkey D. Luffy, un jeune pirate avec un corps en caoutchouc, qui cherche le trésor légendaire connu sous le nom de 'One Piece'. Luffy rassemble un équipage de pirates pour l'aider dans sa quête, et doit affronter des ennemis puissants pour atteindre son objectif. Le manga explore les thèmes de l'amitié, de l'aventure et de la persévérance."),
+("Attack on Titan", "Hajime Isayama", "L'attaque des titans est un manga écrit et illustré par Hajime Isayama. L'histoire se déroule dans un monde où l'humanité doit faire face à des géants mangeurs d'hommes appelés Titans. Les survivants vivent dans une citadelle protégée par trois murs géants, mais lorsqu'un Titan géant détruit la première muraille, l'humanité est forcée de se battre pour sa survie. Le manga explore les thèmes de la survie, de la peur et de la détermination."),
+("Death Note", "Tsugumi Ohba / Takeshi Obata", "Death Note est un manga écrit par Tsugumi Ohba et illustré par Takeshi Obata. L'histoire suit un lycéen nommé Light Yagami, qui trouve un cahier qui permet de tuer les gens en écrivant leur nom dedans. Light décide d'utiliser le cahier pour tuer les criminels du monde, mais est poursuivi par un détective connu sous le nom de L. Le manga explore les thèmes de la justice, de la morale et de la psychologie."),
+("Fullmetal Alchemist", "Hiromu Arakawa", "Fullmetal Alchemist est un manga écrit et illustré par Hiromu Arakawa. L'histoire suit deux frères alchimistes, Edward et Alphonse Elric, qui cherchent une pierre légendaire pour récupérer leur corps, qui a été perdu lors d'une tentative de ressusciter leur mère. Le manga explore les thèmes de la science, de la famille et de la conséquence de nos actes."),
 ("Bleach", "Tite Kubo", "L'histoire suit un adolescent nommé Ichigo Kurosaki, qui a la capacité de voir les esprits. Après avoir rencontré une shinigami (déesse de la mort) blessée, il devient lui-même un shinigami pour protéger les âmes des morts et affronter des ennemis dangereux. Le manga explore les thèmes de la mort, de l'amitié et de la loyauté."),
 ("Dragon Ball", "Akira Toriyama", "L'histoire suit les aventures d'un garçon nommé Son Goku, qui possède une queue de singe et qui vit dans un monde fantastique rempli de dragons, de magie et de guerriers puissants. Goku est un combattant exceptionnel et doit trouver les Dragon Balls, sept sphères magiques dispersées à travers le monde, pour réaliser son vœu. Le manga explore les thèmes de la force, de l'amitié et de la persévérance."),
 ("Hunter x Hunter", "Yoshihiro Togashi", "L'histoire suit un jeune garçon nommé Gon Freecss, qui découvre que son père, un Hunter professionnel, est toujours en vie. Gon décide alors de devenir un Hunter lui-même pour le retrouver. En cours de route, il rencontre des amis et des ennemis, et doit faire face à des défis dangereux pour atteindre son objectif. Le manga explore les thèmes de la famille, de l'aventure et de la découverte de soi."),
 ("My Hero Academia", "Kohei Horikoshi", "L'histoire se déroule dans un monde où la plupart des gens possèdent des super-pouvoirs appelés 'Quirks'. Izuku Midoriya est l'un des rares à ne pas en avoir, mais rêve toujours de devenir un héros. Lorsqu'il rencontre son idole, All Might, il est choisi pour devenir son successeur et entre à l'école de héros pour apprendre à maîtriser ses compétences. Le manga explore les thèmes de l'héroïsme, de la persévérance et de l'amitié."),
-("Jojo's Bizarre Adventure", "Hirohiko Araki", "\"Jojo's Bizarre Adventure\" est un manga qui suit la famille Joestar, qui possède des pouvoirs surnaturels différents dans différentes époques. Chaque arc raconte l'histoire d'un membre différent de la famille Joestar, et les histoires sont liées par des thèmes communs tels que l'honneur, le courage et le pouvoir de l'amitié. Le manga est connu pour son style unique, ses personnages excentriques et ses combats spectaculaires.");
+("Jojo's Bizarre Adventure", "Hirohiko Araki", "Jojo's Bizarre Adventure est un manga qui suit la famille Joestar, qui possède des pouvoirs surnaturels différents dans différentes époques. Chaque arc raconte l'histoire d'un membre différent de la famille Joestar, et les histoires sont liées par des thèmes communs tels que l'honneur, le courage et le pouvoir de l'amitié. Le manga est connu pour son style unique, ses personnages excentriques et ses combats spectaculaires."),
+('Berserk', 'Kentaro Miura', "L'histoire de Berserk se déroule dans un monde sombre et brutal, où le protagoniste, Guts, lutte pour sa survie et se venge des démons qui ont détruit sa vie. Avec un récit profondément complexe et mature, Berserk explore des thèmes tels que la violence, la trahison, la cruauté et la nature de l'humanité. Le style artistique unique de Miura et les scènes d'action intenses ont captivé les lecteurs du monde entier. Berserk est considéré comme l'un des meilleurs mangas jamais créés, offrant une expérience sombre, tragique et épique.");
+
 
 -- ajout de 3 tomes pour le manga "One Piece"
 INSERT INTO volume (number, id_manga, name, price, quantity, publisher, number_pages, img_volume)
@@ -116,8 +118,8 @@ VALUES
 (2, 4, "Livre 2", 7.99, 7, "Kana", 200, "https://tse2.mm.bing.net/th?id=OIP.6SiH7DMmEP9yTYOFdgm-oAAAAA&pid=Api&P=0");
 
 INSERT INTO user (mail, password, last_name, first_name, address, postal_code, admin)
-VALUES ("b.logan006@gmail.com", "Yoloswag06", "Logan", "Brunet", "18 rue du Maréchal Feur", "06789", true),
-("philou225@gmail.com","Yoloswag225","Philippe","Bouillon","90 rue de la Paix", 95600, false);
+VALUES ("b.logan006@gmail.com", "Yoloswag06", "Logan", "Brunet", "18 rue du Maréchal Feur", "06789", 1),
+("philou225@gmail.com","Yoloswag225","Philippe","Bouillon","90 rue de la Paix", 95600, 0);
 
 INSERT INTO cart (mail_user) VALUES 
 ("b.logan006@gmail.com"),

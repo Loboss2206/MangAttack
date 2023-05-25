@@ -49,7 +49,7 @@ function test_email($txt)
     else return (1);
 }
 
-function addToKart($idVolume, $idCart, $quantity)
+function addToCart($idVolume, $idCart, $quantity)
 {
     include('connectDB.php');
     $resultCartVolumeCustomer = $conn->prepare("SELECT quantity FROM cart_volume WHERE id_volume = '" . $idVolume . "' AND id_cart = '" . $idCart . "'");
@@ -62,6 +62,27 @@ function addToKart($idVolume, $idCart, $quantity)
         $deleteOldId->execute();
     }
 
-    $insertInKart = $conn->prepare("INSERT INTO cart_volume (id_volume, id_cart, quantity) VALUES ('" . $idVolume . "','" . $idCart . "','" . $quantity . "')");
-    $insertInKart->execute();
+    $insertInCart = $conn->prepare("INSERT INTO cart_volume (id_volume, id_cart, quantity) VALUES ('" . $idVolume . "','" . $idCart . "','" . $quantity . "')");
+    $insertInCart->execute();
+}
+
+function addVolumeToBDD($number, $nameManga, $nameVolume, $price, $quantity, $publisher, $numberPages, $img)
+{
+    include('connectDB.php');
+    $resultManga = $conn->prepare("SELECT id FROM manga WHERE name = '" . $nameManga . "'");
+    $resultManga->execute();
+    $resultManga = $resultManga->fetch(PDO::FETCH_NUM)[0];
+
+    $insert = $conn->prepare("INSERT INTO volume (number, id_manga, name, price, quantity, publisher, number_pages, img_volume) VALUES ('" . $number . "','" . $resultManga . "','" . $nameVolume . "','" . $price . "','" . $quantity . "','" . $publisher . "','" . $numberPages . "','" . $img . "');");
+    $insert->execute();
+}
+
+function test_admin($mail)
+{
+    include('connectDB.php');
+    $resultAdmin = $conn->prepare("SELECT admin FROM user WHERE mail = '" . $mail . "'");
+    $resultAdmin->execute();
+    $resultAdmin = $resultAdmin->fetch(PDO::FETCH_NUM)[0];
+
+    return $resultAdmin;
 }

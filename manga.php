@@ -11,19 +11,19 @@ if (isset($_GET['id'])) {
 }
 
 if (isset($_SESSION['identifier'])) {
-    $resultIdKart = $conn->prepare("SELECT id FROM cart WHERE mail_user = '" . $_SESSION['identifier'] . "'");
-    $resultIdKart->execute();
-    $resultIdKart = $resultIdKart->fetch(PDO::FETCH_NUM);
+    $resultIdCart = $conn->prepare("SELECT id FROM cart WHERE mail_user = '" . $_SESSION['identifier'] . "'");
+    $resultIdCart->execute();
+    $resultIdCart = $resultIdCart->fetch(PDO::FETCH_NUM);
 } /* else {
     header('Location: login.php');
 } */
 
-if (isset($_POST['add_to_kart'])) {
+if (isset($_POST['add_to_cart'])) {
     $quantity = $_POST['quantity'];
     $tome_id = $_SESSION['tome_id'];
-    $kart_id = $resultIdKart[0];
+    $cart_id = $resultIdCart[0];
 
-    addToKart($tome_id, $kart_id, $quantity);
+    addToCart($tome_id, $cart_id, $quantity);
 }
 ?>
 
@@ -77,7 +77,13 @@ if (isset($_POST['add_to_kart'])) {
                         <button class="grid-item buttonChange" id="buttonMinus" type="button">-</button>
                         <input class="grid-item" id="inputQuantity" type="number" value="1" min="1" name="quantity">
                         <button class="grid-item buttonChange" id="buttonPlus" type="button">+</button>
-                        <button type="submit" class="grid-item" id="buttonCart" name="add_to_kart">Ajouter au panier</button>
+                        <?php
+                        if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == 1) {
+                            echo '<button type="submit" class="grid-item" id="buttonCart" name="add_to_cart">Ajouter au panier</button>';
+                        } else {
+                            echo '<button type="button" class="grid-item" id="buttonCart buttonCart_disconnected" name="add_to_cart">Ajouter au panier</button>';
+                        }
+                        ?>
                     </div>
                 </form>
 

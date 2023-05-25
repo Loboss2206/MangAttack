@@ -66,7 +66,7 @@ if (isset($_POST['identifier'], $_POST['password'])) {
                     <p>Code Postal : ' . $resultUser[5] . '</p>
                     <p>Adresse mail : ' . $resultUser[0] . '</p>
                 </div>
-                <a href="kart.php">
+                <a href="cart.php">
                     <p>Votre Panier</p>
                 </a>
                 <a href="phpUtils/logout.php">

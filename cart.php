@@ -14,7 +14,7 @@ if (!isset($_SESSION)) {
     <meta charset="UTF-8">
     <title>Mangattack</title>
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/kart.css">
+    <link rel="stylesheet" href="css/cart.css">
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
     <script defer="defer" src="./js/manga.js"></script>
@@ -28,16 +28,16 @@ if (!isset($_SESSION)) {
 
     <!-- Main -->
     <main>
-        <section id="kart-presentation">
-            <div id="kart-items">
+        <section id="cart-presentation">
+            <div id="cart-items">
                 <?php
-                $resultIdKart = $conn->prepare("SELECT id FROM cart WHERE mail_user = '" . $_SESSION['identifier'] . "'");
-                $resultIdKart->execute();
-                $resultIdKart = $resultIdKart->fetch(PDO::FETCH_NUM);
+                $resultIdCart = $conn->prepare("SELECT id FROM cart WHERE mail_user = '" . $_SESSION['identifier'] . "'");
+                $resultIdCart->execute();
+                $resultIdCart = $resultIdCart->fetch(PDO::FETCH_NUM);
 
-                $resultKart = $conn->prepare("SELECT * FROM cart_volume WHERE id_cart = " . $resultIdKart[0]);
-                $resultKart->execute();
-                print_r($resultKart);
+                $resultCart = $conn->prepare("SELECT * FROM cart_volume WHERE id_cart = " . $resultIdCart[0]);
+                $resultCart->execute();
+                print_r($resultCart);
                 ?>
             </div>
         </section>

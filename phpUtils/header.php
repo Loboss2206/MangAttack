@@ -8,8 +8,14 @@ echo
 '<header>
 <h1>MangAttack</h1>
 <nav>
-    <ul>
-        <li><a href="index.php">Accueil</a></li>
+    <ul>';
+if (isset($_SESSION['loggedin']) == 1 && $_SESSION['loggedin'] == 1) {
+    if (test_admin($_SESSION['identifier']) == 1) {
+        echo '<li><a href="admin.php">Admin</a></li>';
+    }
+}
+
+echo '<li><a href="index.php">Accueil</a></li>
         <li><a href="#">Nouveautés</a></li>
         <li><a href="#">Catégories</a></li>
         <li><a href="profile.php">';
