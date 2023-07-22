@@ -20,7 +20,7 @@ footer {
 }
 
 h1 {
-    margin: 0;
+    margin: auto 10px;
 }
 
 main {
@@ -62,16 +62,21 @@ nav ul {
 }
 
 nav li {
-    margin: 0 10px;
+    margin: 0 2.5px;
+    padding: 10px;
+}
+
+nav li:hover {
+    background-color: white;
+}
+
+nav li:hover a {
+    color: black;
 }
 
 nav a {
     color: #fff;
     text-decoration: none;
-}
-
-nav a:hover {
-    text-decoration: underline;
 }
 
 .img-manga {
@@ -81,4 +86,71 @@ nav a:hover {
 
 #test {
     background-color: yellow;
+}
+
+/* Styles pour les écrans de petite taille */
+@media (max-width: 826px) {
+
+    /* Styles spécifiques pour les écrans de petite taille */
+    nav {
+        color: #fff;
+        padding: 10px 20px;
+    }
+
+    nav ul {
+        padding: 0;
+        display: none;
+        justify-content: space-between;
+        align-items: right;
+        position: absolute;
+        right: 2vw;
+        top: 58px;
+        z-index: 1;
+        border: 2px solid #fff;
+    }
+
+    nav li {
+        width: 100%;
+        padding: 10px 0;
+        position: relative;
+        text-align: center;
+    }
+
+    nav li:hover {
+        background-color: white;
+    }
+
+    nav li:hover a {
+        color: black;
+    }
+
+    nav li:not(:last-child) {
+        border-bottom: 1px solid #fff;
+    }
+
+    nav a {
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .menu-icon {
+        font-size: 40px;
+        cursor: pointer;
+    }
+
+    .icon-bar {
+        display: block;
+        width: 22px;
+        height: 4px;
+        margin: 4px 0;
+        background-color: rgb(255, 255, 255);
+    }
+
+    nav:hover ul {
+        display: flex;
+        flex-direction: column;
+        align-items: right;
+        background-color: #333;
+    }
+
 }

@@ -62,7 +62,17 @@ if (
                 <form method="post">
                     <div class="form-wrap">
                         <h2>Nom du manga :</h2>
-                        <input type="text" name="mangaName" id="mangaName" class="input-manga">
+                        <select id="mangaName" name="mangaName">
+                            <?php
+
+                            $resultMangas = $conn->prepare("SELECT * FROM manga");
+                            $resultMangas->execute();
+
+                            while ($row = $resultMangas->fetch(PDO::FETCH_NUM)) {
+                                echo '<option value="' . $row[1] . '">' . $row[1] . '</option>';
+                            }
+                            ?>
+                        </select>
                     </div>
                     <div class="form-wrap">
                         <h2>Numéro du tome :</h2>

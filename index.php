@@ -31,7 +31,7 @@ include_once 'phpUtils/connectDB.php';
     <!-- Main -->
     <main>
         <section id="featured">
-            <h2 class="title-section">Les Nouveautés</h2>
+            <h2 class="title-section">Les plus vendus</h2>
             <div id="grid-featured">
                 <?php
                 $resultVolumes = $conn->prepare("SELECT * FROM volume ORDER BY id ASC LIMIT 15");
@@ -59,7 +59,7 @@ include_once 'phpUtils/connectDB.php';
                 $resultCategories = $conn->prepare("SELECT * FROM category");
                 $resultCategories->execute();
                 foreach ($resultCategories as $row) {
-                    echo '<li><a href="#">' . $row['name'] . '</a></li>';
+                    echo '<li><a href="category.php?id=' . $row["id"] . '">' . $row['name'] . '</a></li>';
                 }
                 ?>
             </ul>

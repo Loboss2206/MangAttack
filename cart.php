@@ -49,4 +49,22 @@ if (!isset($_SESSION)) {
     ?>
 </body>
 
+<?php
+$resultIdCart = $conn->prepare("SELECT id FROM cart WHERE mail_user = '" . $_SESSION['identifier'] . "'");
+$resultIdCart->execute();
+$resultIdCart = $resultIdCart->fetch(PDO::FETCH_NUM);
+
+echo $resultIdCart[0];
+
+$resultCart = $conn->prepare("SELECT * FROM cart_volume WHERE id_cart = " . $resultIdCart[0]);
+$resultCart->execute();
+while ($row = $resultCart->fetch(PDO::FETCH_NUM)) {
+    echo '#0' . $row[0];
+    echo '#1' . $row[1];
+    echo '#2#' . $row[2];
+}
+
+print_r($resultCart);
+?>
+
 </html>

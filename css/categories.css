@@ -1,0 +1,41 @@
+#categories {
+    padding: 20px;
+    margin: auto;
+}
+
+#categories h2 {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 0 0 20px;
+}
+
+.grid-categories {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+    margin: auto;
+    padding: 20px;
+    background-color: #b0a9a9;
+    clear: both;
+    border-radius: 10px;
+}
+
+.grid-categories a {
+    text-decoration: none;
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.grid-categories h3 {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 10px 0 0;
+}
+
+/* Appliquer les styles pour le prix de chaque manga */
+.grid-categories p {
+    margin: 5px 0 0;
+    font-size: 18px;
+}

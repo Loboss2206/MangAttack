@@ -26,11 +26,16 @@ form {
 
 .form-wrap {
     padding-left: 1vw;
-    margin-bottom: 10px;
+    margin-top: 5px;
+}
+
+.form-wrap h2 {
+    margin-bottom: 5px;
+    font-size: 1.5vw;
 }
 
 .input-manga {
-    width: 200px;
+    width: 15vw;
 }
 
 #submitVolume {
@@ -42,6 +47,7 @@ form {
     color: #fff;
     border: none;
     cursor: pointer;
+    font-size: 0.9vw;
 }
 
 /* Styles pour l'aperçu de l'image */

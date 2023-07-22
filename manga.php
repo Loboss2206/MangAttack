@@ -65,8 +65,43 @@ if (isset($_POST['add_to_cart'])) {
                 <h3>' . $resultTome[3] . '</h3>
                 <p>Auteur : ' . $resultManga[2] . '</p>
                 <p>Prix : ' . $resultTome[4] . '€</p>
-                <p>Catégorie : Shonen</p>
-                <p>Genre : Aventure</p>
+                <p>Catégorie : ';
+
+                $resultIdCategory = $conn->prepare("SELECT id_category FROM manga_category WHERE id_manga = " . $resultManga[0]);
+                $resultIdCategory->execute();
+                $resultIdCategory = $resultIdCategory->fetchAll(PDO::FETCH_NUM)[0];
+
+                $resultCategory = $conn->prepare("SELECT name FROM category WHERE id = " . $resultIdCategory[0]);
+                $resultCategory->execute();
+
+                $resultCategory = $resultCategory->fetch(PDO::FETCH_NUM)[0];
+                echo $resultCategory;
+
+                echo '</p>
+                <p>Genre : ';
+
+                $resultKinds = $conn->prepare("SELECT id_kind FROM manga_kind WHERE id_manga = " . $resultManga[0]);
+                $resultKinds->execute();
+                $resultKinds = $resultKinds->fetchAll(PDO::FETCH_NUM);
+
+                $indexRand = array_rand($resultKinds, min(3, sizeof($resultKinds)));
+                $kinds = [];
+                $first = true;
+                foreach ($indexRand as $index) {
+                    if (!$first) {
+                        echo ', ';
+                    } else {
+                        $first = false;
+                    }
+
+                    $kinds[] = $resultKinds[$index];
+                    $resultKind = $conn->prepare("SELECT name FROM kind WHERE id = " . $resultKinds[$index][0]);
+                    $resultKind->execute();
+                    $resultKind = $resultKind->fetch(PDO::FETCH_NUM)[0];
+                    echo $resultKind;
+                }
+
+                echo '</p>
                 <p>Éditeur : ' . $resultTome[6] . '</p>
                 <p>Nombre de pages : ' . $resultTome[7] . '</p>
                 <p>Disponibilité : En stock</p>'
