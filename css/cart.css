@@ -1,0 +1,27 @@
+#cart-presentation {
+    padding: 20px;
+    margin: auto;
+}
+
+#cart-items {
+    padding: 20px;
+    margin: auto;
+    background-color: #b0a9a9;
+}
+
+.cart-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px 0;
+    padding: 10px;
+    background-color: red;
+    border-radius: 10px;
+}
+
+#cart-items img {
+    width: 100px;
+    height: 150px;
+    margin-right: 20px;
+}

@@ -1,0 +1,18 @@
+#summary {
+    padding: 20px;
+    margin: auto;
+}
+
+#summary h2 {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+#summaryContent {
+    margin: auto;
+    padding: 20px;
+    background-color: #b0a9a9;
+    clear: both;
+    border-radius: 10px;
+}

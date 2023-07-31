@@ -19,7 +19,7 @@ function saveUser($mail, $password, $first_name, $last_name, $address, $postal_c
 function exist_userBDD($mail)
 {
     include('connectDB.php');
-    $result = $conn->prepare("SELECT * FROM user");
+    $result = $conn->prepare("SELECT * FROM user_");
     $result->execute();
     while ($row = $result->fetch(PDO::FETCH_NUM)) {
         if ($row[0] == $mail) {
@@ -32,7 +32,7 @@ function exist_userBDD($mail)
 function user_auth($mail, $psw)
 {
     include('connectDB.php');
-    $result = $conn->prepare("SELECT * FROM user");
+    $result = $conn->prepare("SELECT * FROM user_");
     $result->execute();
     while ($row = $result->fetch(PDO::FETCH_NUM)) {
         if ($row[0] == $mail && $row[1] == $psw) {
@@ -52,18 +52,68 @@ function test_email($txt)
 function addToCart($idVolume, $idCart, $quantity)
 {
     include('connectDB.php');
-    $resultCartVolumeCustomer = $conn->prepare("SELECT quantity FROM cart_volume WHERE id_volume = '" . $idVolume . "' AND id_cart = '" . $idCart . "'");
-    $resultCartVolumeCustomer->execute();
-    $resultCartVolumeCustomer = $resultCartVolumeCustomer->fetch(PDO::FETCH_NUM);
+    $resultCartVolumeUser = $conn->prepare("SELECT quantity FROM cart_volume WHERE id_volume = '" . $idVolume . "' AND id_cart = '" . $idCart . "'");
+    $resultCartVolumeUser->execute();
+    $resultCartVolumeUser = $resultCartVolumeUser->fetch(PDO::FETCH_NUM);
 
-    if ($resultCartVolumeCustomer != null) {
-        $quantity = $quantity + $resultCartVolumeCustomer[0];
+    if ($resultCartVolumeUser != null) {
+        $quantity = $quantity + $resultCartVolumeUser[0];
         $deleteOldId = $conn->prepare("DELETE FROM cart_volume WHERE id_volume = '" . $idVolume . "' AND id_cart = '" . $idCart . "'");
         $deleteOldId->execute();
     }
 
     $insertInCart = $conn->prepare("INSERT INTO cart_volume (id_volume, id_cart, quantity) VALUES ('" . $idVolume . "','" . $idCart . "','" . $quantity . "')");
     $insertInCart->execute();
+}
+
+function emptyCart($idCart) {
+    include('connectDB.php');
+    $resultCartVolumeUser = $conn->prepare("DELETE FROM cart_volume WHERE id_cart = " . $idCart);
+    $resultCartVolumeUser->execute();
+}
+
+function createSummary($idCart) {
+    include('connectDB.php');
+    
+    $resultMailUser = $conn->prepare("SELECT mail_user FROM cart WHERE id = " . $idCart);
+    $resultMailUser->execute();
+    $mail_user = $resultMailUser->fetch(PDO::FETCH_NUM)[0];
+
+    $createSummary = $conn->prepare("INSERT INTO summary (mail_user) VALUES ('" . $mail_user . "')");
+    $createSummary->execute();
+
+    $resultCart = $conn->prepare("SELECT * FROM cart_volume WHERE id_cart = " . $idCart);
+    $resultCart->execute();
+
+    $totalPrice = 0;
+
+    while ($row = $resultCart->fetch(PDO::FETCH_NUM)) {
+        $id_volume = $row[1];
+        $quantity = $row[2];
+
+        $resultVolume = $conn->prepare("SELECT * FROM volume WHERE id = " . $id_volume);
+        $resultVolume->execute();
+        $resultVolume = $resultVolume->fetch(PDO::FETCH_NUM);
+
+        $resultIdSummary = $conn->prepare("SELECT id FROM summary WHERE mail_user = '" . $mail_user . "' ORDER BY id DESC LIMIT 1");
+        $resultIdSummary->execute();
+        $resultIdSummary = $resultIdSummary->fetch(PDO::FETCH_NUM);
+
+        $id_summary = $resultIdSummary[0];
+
+        $unitPrice = $resultVolume[4];
+        $price = $unitPrice * $quantity;
+        $totalPrice += $price;
+
+        $insertInSummaryVolume = $conn->prepare("INSERT INTO summary_volume (id_summary, id_volume, quantity) VALUES ('" . $id_summary . "','" . $id_volume . "','" . $quantity . "')");
+        $insertInSummaryVolume->execute();
+    }
+
+    $modifySummary = $conn->prepare("UPDATE summary SET total = '" . $totalPrice . "', date = '" . date("d-m-Y") . "' WHERE id = '" . $id_summary . "'");
+    $modifySummary->execute();
+
+    echo 'totalPrice : ' . $totalPrice . '<br>';
+    echo 'date : ' . date("d-m-Y") . '<br>';
 }
 
 function addVolumeToBDD($number, $nameManga, $nameVolume, $price, $quantity, $publisher, $numberPages, $img)
@@ -80,7 +130,7 @@ function addVolumeToBDD($number, $nameManga, $nameVolume, $price, $quantity, $pu
 function test_admin($mail)
 {
     include('connectDB.php');
-    $resultAdmin = $conn->prepare("SELECT admin FROM user WHERE mail = '" . $mail . "'");
+    $resultAdmin = $conn->prepare("SELECT admin FROM user_ WHERE mail = '" . $mail . "'");
     $resultAdmin->execute();
     $resultAdmin = $resultAdmin->fetch(PDO::FETCH_NUM)[0];
 

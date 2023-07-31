@@ -5,6 +5,19 @@ include_once 'phpUtils/connectDB.php';
 if (!isset($_SESSION)) {
     session_start();
 }
+
+$resultIdCart = $conn->prepare("SELECT id FROM cart WHERE mail_user = '" . $_SESSION['identifier'] . "'");
+$resultIdCart->execute();
+$idCart = $resultIdCart->fetch(PDO::FETCH_NUM)[0];
+
+if (isset($_POST['emptyCart'])) {
+    emptyCart($idCart);
+}
+
+if (isset($_POST['purchaseCart'])) {
+    createSummary($idCart);
+    header("Location: summary.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -31,14 +44,74 @@ if (!isset($_SESSION)) {
         <section id="cart-presentation">
             <div id="cart-items">
                 <?php
-                $resultIdCart = $conn->prepare("SELECT id FROM cart WHERE mail_user = '" . $_SESSION['identifier'] . "'");
-                $resultIdCart->execute();
-                $resultIdCart = $resultIdCart->fetch(PDO::FETCH_NUM);
+                if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == 1) {
 
-                $resultCart = $conn->prepare("SELECT * FROM cart_volume WHERE id_cart = " . $resultIdCart[0]);
-                $resultCart->execute();
-                print_r($resultCart);
+                    $resultIdCart = $conn->prepare("SELECT id FROM cart WHERE mail_user = '" . $_SESSION['identifier'] . "'");
+                    $resultIdCart->execute();
+                    $resultIdCart = $resultIdCart->fetch(PDO::FETCH_NUM);
+
+                    $resultCart = $conn->prepare("SELECT * FROM cart_volume WHERE id_cart = " . $resultIdCart[0]);
+                    $resultCart->execute();
+
+                    $totalPrice = 0;
+
+                    while ($row = $resultCart->fetch(PDO::FETCH_NUM)) {
+                        $id_volume = $row[1];
+                        $quantity = $row[2];
+
+                        $resultVolume = $conn->prepare("SELECT * FROM volume WHERE id = " . $id_volume);
+                        $resultVolume->execute();
+                        $resultVolume = $resultVolume->fetch(PDO::FETCH_NUM);
+
+                        $resultManga = $conn->prepare("SELECT * FROM manga WHERE id = " . $resultVolume[2]);
+                        $resultManga->execute();
+                        $resultManga = $resultManga->fetch(PDO::FETCH_NUM);
+
+                        $unitPrice = $resultVolume[4];
+                        $price = $unitPrice * $quantity;
+                        $totalPrice += $price;
+                        $name = $resultManga[1] . ' - Tome ' . $resultVolume[1];
+                        $img = $resultVolume[8];
+
+                        echo '<div class="cart-item">
+                        <img src="' . $img . '" alt="Manga 1">
+                        <div class="cart-item-info">
+                            <h3>' . $name . '</h3>
+                            <p>Quantité : ' . $quantity . '</p>
+                            <p>Prix : ' . $price . '€</p>
+                        </div></div>';
+                        echo "<br>";
+                    }
+
+                    if ($totalPrice == 0) {
+                        echo 'Votre panier est vide';
+                    }
+
+                    echo '<div id="cart-total">
+                    <p>Total : ' . $totalPrice . '€</p>
+                    </div>';
                 ?>
+
+                    <form action="cart.php" method="post">
+                        <input type="submit" name="emptyCart" value="Vider le panier">
+                    </form>
+
+                    <?php if ($totalPrice != 0) { ?>
+
+                        <form action="cart.php" method="post">
+                            <input type="submit" name="purchaseCart" value="Passer commande">
+                        </form>
+
+                    <?php } else { ?>
+
+                        <form>
+                            <input type="submit" name="purchaseCart" value="Passer commande">
+                        </form>
+
+                <?php }
+                } else {
+                    echo 'Vous devez être connecté pour accéder à votre panier';
+                } ?>
             </div>
         </section>
     </main>
@@ -47,24 +120,8 @@ if (!isset($_SESSION)) {
     <?php
     include_once 'phpUtils/footer.php';
     ?>
+
+    <script defer="defer" src="./js/cart.js"></script>
 </body>
-
-<?php
-$resultIdCart = $conn->prepare("SELECT id FROM cart WHERE mail_user = '" . $_SESSION['identifier'] . "'");
-$resultIdCart->execute();
-$resultIdCart = $resultIdCart->fetch(PDO::FETCH_NUM);
-
-echo $resultIdCart[0];
-
-$resultCart = $conn->prepare("SELECT * FROM cart_volume WHERE id_cart = " . $resultIdCart[0]);
-$resultCart->execute();
-while ($row = $resultCart->fetch(PDO::FETCH_NUM)) {
-    echo '#0' . $row[0];
-    echo '#1' . $row[1];
-    echo '#2#' . $row[2];
-}
-
-print_r($resultCart);
-?>
 
 </html>
