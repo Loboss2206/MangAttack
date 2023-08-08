@@ -1,17 +1,14 @@
-section {
-    padding: 20px;
-    margin: auto;
-}
-
 #grid {
+    width: 70%;
     margin: auto;
-    padding: 20px 20%;
+    padding: 20px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: 1fr;
     grid-gap: 10px;
     align-items: center;
-    background-color: #f14040;
+    background-color: rgba(240, 240, 240, 0.9);
+    border-radius: 5px;
 }
 
 #text-presentation a {
@@ -19,14 +16,20 @@ section {
     color: #000;
 }
 
+#grid-presentation h2 {
+    font-size: 30px;
+    font-weight: bold;
+    margin: 10px;
+}
+
 #grid-presentation h3 {
     font-size: 24px;
     font-weight: bold;
-    margin: 10px 0 0;
+    margin: 10px;
 }
 
 #grid-presentation p {
-    margin: 5px 0 0;
+    margin: 10px;
     font-size: 18px;
 }
 
@@ -36,8 +39,30 @@ section {
     margin: auto;
 }
 
+#titles {
+    margin: auto;
+    padding: 20px 10% 10px;
+    align-items: center;
+    background-color: #b0a9a9;
+    border-radius: 5px;
+}
+
+#infos {
+    margin: auto;
+    padding: 20px 10%;
+    align-items: center;
+}
+
+form {
+    margin: auto;
+    padding: 10px 10%;
+    display: flex;
+    flex-direction: column;
+}
+
 #addToCart {
-    width: 12vw;
+    margin-left: 10px;
+    width: 16vw;
     height: 4vw;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -61,15 +86,52 @@ section {
 .buttonChange {
     padding: 0.5vw 1vw;
     border: #000 2px solid;
+    border-radius: 3px;
 }
 
 #inputQuantity {
     width: 10vw;
 }
 
-#description {
+
+#grid-presentation p#available {
+    margin: 10px;
+    font-size: 20px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Styles pour le mini-menu */
+.menu {
+    width: 70%;
     margin: auto;
-    padding: 20px 10% 10px;
-    align-items: center;
+    display: flex;
+    justify-content: left;
+    transform: translateX(-20px);
+}
+
+
+.menu-item {
+    padding: 8px 15px;
+    border: #000 1px solid;
+    border-radius: 5px 5px 0 0;
+    background-color: transparent;
+    cursor: pointer;
+    font-weight: bold;
+    background-color: rgba(240, 240, 240, 0.9);
+}
+
+.menu-item.active {
     background-color: #b0a9a9;
+}
+
+/* Styles pour la box */
+.box {
+    width: 70%;
+    margin: auto;
+    padding: 20px;
+    align-items: center;
+    background-color: rgba(240, 240, 240, 0.9);
+    border-top: #000 1px solid;
+    border-radius: 0 5px 5px 5px;
 }

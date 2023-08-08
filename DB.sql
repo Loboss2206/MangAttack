@@ -1,5 +1,6 @@
 -- DROP TABLE
 
+DROP TABLE IF EXISTS review;
 DROP TABLE IF EXISTS summary_volume;
 DROP TABLE IF EXISTS summary;
 DROP TABLE IF EXISTS cart_volume;
@@ -100,6 +101,16 @@ CREATE TABLE summary_volume (
     CONSTRAINT fk_volume FOREIGN KEY (id_volume) REFERENCES volume(id)
 );
 
+CREATE TABLE review (
+    id SERIAL PRIMARY KEY,
+    mail_user VARCHAR(128),
+    id_volume INT,
+    score FLOAT,
+    comment VARCHAR(2048),
+    CONSTRAINT fk_mail_user_review FOREIGN KEY (mail_user) REFERENCES user_(mail),
+    CONSTRAINT fk_volume_review FOREIGN KEY (id_volume) REFERENCES volume(id)
+);
+
 
 
 -- INSERT VALUES
@@ -119,7 +130,7 @@ VALUES  ('Naruto', 'Masashi Kishimoto', 8.07, '''Naruto'' est un manga écrit et
         ('Nana', 'Ai Yazawa', 8.78, 'Nana est une série de manga dramatique qui suit la vie de deux jeunes femmes nommées Nana Komatsu et Nana Osaki, qui se rencontrent dans un train pour Tokyo et nouent une amitié improbable. Dans le cadre de l''industrie musicale et des défis de la vie adulte, Nana explore des thèmes tels que l''amour, l''amitié, les rêves et la quête du bonheur. Le style de narration unique et le style artistique distinctif d''Ai Yazawa ont fait de Nana un manga apprécié des fans du monde entier. La série dépeint les hauts et les bas de la vie des personnages, de leurs relations et des complexités de leurs parcours individuels.');
 
 INSERT INTO volume (number, id_manga, name, price, quantity, publisher, number_pages, img_volume)
-VALUES  (1, 1, 'Naruto Uzumaki !!', 3.00, 24, 'Kana', 192, 'https://tse3.mm.bing.net/th?id=OIP.8JKy1jY5EBDIgvHwjbDs8gHaKG&pid=Api&P=0'),
+VALUES  (1, 1, 'Naruto Uzumaki !!', 3.00, 0, 'Kana', 192, 'https://tse3.mm.bing.net/th?id=OIP.8JKy1jY5EBDIgvHwjbDs8gHaKG&pid=Api&P=0'),
         (2, 1, 'Un client désagréable', 7.99, 12, 'Kana', 208, 'https://tse1.mm.bing.net/th?id=OIP.aGlY_NNw7DFeFyG0aMWL2gHaLH&pid=Api&P=0'),
         (1, 2, 'À l''aube d''une grande aventure', 6.90, 53, 'Glénat', 208, 'https://tse3.mm.bing.net/th?id=OIP.Bt2DdPiv8KvwJVCmqDk7LgHaLf&pid=Api&P=0'),
         (2, 2, 'Luffy versus la bande à Baggy !!', 6.90, 10, 'Glénat', 208, 'https://tse4.mm.bing.net/th?id=OIP.V_ZuPcVUaR4SI23oau7OiwAAAA&pid=Api&P=0'),
@@ -146,9 +157,16 @@ VALUES  (1, 1), (8, 1), (1, 2), (2, 2), (5, 2), (9, 4),
         (10, 4), (11, 4), (3, 12), (4, 12), (7, 12);
 
 INSERT INTO user_ (mail, password, last_name, first_name, address, postal_code, admin)
-VALUES  ('b.logan006@gmail.com', 'Yoloswag06', 'Logan', 'Brunet', '18 rue du Maréchal Feur', '06789', true),
-        ('philou225@gmail.com','Yoloswag225','Philippe','Bouillon','90 rue de la Paix', '95600', false);
+VALUES  ('b.logan006@gmail.com', 'Yoloswag06', 'Logan', 'Brunet', '18 rue du Maréchal Feur', '06600', true),
+        ('philou225@gmail.com','Yoloswag225','Philippe','Bouillon','90 rue de la Paix', '95600', false),
+        ('jeanmi69000@hotmail.com','JM69DP','Jean-Michel','Dupont','1 rue de la République', '69000', false),
+        ('antolefifou404@outlook.com','Anto404','Antoine','Lefifou','2 rue de la Liberté', '75000', false);
 
 INSERT INTO cart (mail_user)
 VALUES  ('b.logan006@gmail.com'),
         ('philou225@gmail.com');
+
+INSERT INTO review (mail_user, id_volume, score, comment) 
+VALUES  ('jeanmi69000@hotmail.com', 1, 4.5, 'Très bon tome, je recommande ! La fin m''a epoustouflé !'),
+        ('antolefifou404@outlook.com', 6, 3, 'Tome moyen, je m''attendais à mieux...'),
+        ('philou225@gmail.com', 1, 5, 'Tome parfait, rien à redire !');

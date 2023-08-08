@@ -69,7 +69,7 @@ if (isset($_POST['firstName'], $_POST['lastName'], $_POST['mail'], $_POST['passw
                 </div>
                 <div id="form-wrap">
                     <h2>Email :</h2>
-                    <input type="text" placeholder="Ex : Philou225@gmail.com" name="mail" id="mail" class="input-profile">
+                    <input type="text" placeholder="Ex : philou225@gmail.com" name="mail" id="mail" class="input-profile">
                 </div>
                 <div id="form-wrap">
                     <h2>Mot de passe :</h2>

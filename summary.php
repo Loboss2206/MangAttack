@@ -28,20 +28,31 @@ if (!isset($_SESSION)) {
         <section id="summary">
             <h2 class="title-section">Recapitulatif de votre commande</h2>
             <div id="summaryContent">
-                <?php
-                $resultIdSummary = $conn->prepare("SELECT id FROM summary WHERE mail_user = '" . $_SESSION['identifier'] . "' ORDER BY id DESC LIMIT 1");
-                $resultIdSummary->execute();
-                $idSummary = $resultIdSummary->fetch(PDO::FETCH_NUM)[0];
+                <div id="summaryHeader">
+                    <?php
+                    $resultIdSummary = $conn->prepare("SELECT id FROM summary WHERE mail_user = '" . $_SESSION['identifier'] . "' ORDER BY id DESC LIMIT 1");
+                    $resultIdSummary->execute();
+                    $idSummary = $resultIdSummary->fetch(PDO::FETCH_NUM)[0];
 
-                echo '<h3>Commande n°' . $idSummary . '</h3>
-                <h3>MangAttack SARL</h3>
-                <h3>Adresse : 1 Rue de la Paix, 75008 Paris</h3>
-                <h3>Numéro de téléphone : 01 23 45 67 89</h3>';
-                ?>
+                    echo '<h3>Commande n°' . $idSummary . '</h3>
+                    <h3>MangAttack SARL</h3>
+                    <h3>1 Rue de la Paix</h3>
+                    <h3>75008 Paris</h3>
+                    <h3>Tel.01.23.45.67.89</h3>
+                    </br>';
+                    ?>
+                </div>
                 <div id="items">
                     <?php
                     $resultSummaryVolume = $conn->prepare("SELECT * FROM summary_volume WHERE id_summary = " . $idSummary);
                     $resultSummaryVolume->execute();
+
+                    echo '<div class="summary-item">
+                            <p>Quantité</p>
+                            <p>Produit</p>
+                            <p>PU</p>
+                            <p>PT</p>
+                        </div><br>';
 
                     while ($row = $resultSummaryVolume->fetch(PDO::FETCH_NUM)) {
                         $id_volume = $row[1];
@@ -60,12 +71,11 @@ if (!isset($_SESSION)) {
                         $name = $resultManga[1] . ' - Tome ' . $resultVolume[1];
 
                         echo '<div class="summary-item">
-                            <h3>' . $name . '</h3>
-                            <p>Quantité : ' . $quantity . '</p>
-                            <p>Prix : ' . $unitPrice . '€</p>
-                            <p>Prix : ' . $price . '€</p>
-                        </div>';
-                        echo "<br>";
+                            <p>' . $quantity . '</p>
+                            <p>' . $name . '</p>
+                            <p>' . $unitPrice . '€</p>
+                            <p>' . $price . '€</p>
+                        </div><br>';
                     }
                     ?>
                 </div>
@@ -75,7 +85,12 @@ if (!isset($_SESSION)) {
                     $resultSummary->execute();
                     $resultSummary = $resultSummary->fetch(PDO::FETCH_NUM);
 
-                    echo '<p>Total : ' . $resultSummary[3] . '€</p>';
+                    echo '<p>Sous Total : ' . $resultSummary[3] . '€</p>';
+                    echo '<p>TVA 5.00%</p>';
+                    echo '<div class="separator"></div>';
+                    echo '<p>Total TTC : ' . $resultSummary[3] + (0.05 * $resultSummary[3]) . '€</p>';
+
+
                     ?>
                 </div>
                 <div id="date">

@@ -18,17 +18,16 @@ if (isset($_SESSION['loggedin']) == 1 && $_SESSION['loggedin'] == 1) {
 }
 
 echo '<li><a href="index.php">Accueil</a></li>
-        <li><a href="#">Nouveautés</a></li>
         <li><a href="category.php">Catégories</a></li>
         <li><a href="profile.php">';
 
 if (!(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == 1)) {
-    echo 'Connexion';
+    echo 'Connexion</a></li>';
 } else {
-    echo 'Mon Compte';
+    echo 'Mon Compte</a></li>
+    <li><a href="cart.php">Panier</a></li>';
 }
-echo '</a></li>
-        <li><a href="cart.php">Panier</a></li>
+echo '
     </ul>
 </nav>
 </header>';

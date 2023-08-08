@@ -50,7 +50,7 @@ if (isset($_POST['identifier'], $_POST['password'])) {
         if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == 1) {
             echo
             '<section id="profileSection">
-            <h1>Mon Compte</h1>
+            <h2 class="title-section">Mon Compte</h2>
             <div id="profileWrap">
                 <div id="profileInfo">
                     <h2>Informations personnelles</h2>';
@@ -66,11 +66,11 @@ if (isset($_POST['identifier'], $_POST['password'])) {
                     <p>Code Postal : ' . $resultUser[5] . '</p>
                     <p>Adresse mail : ' . $resultUser[0] . '</p>
                 </div>
-                <a href="cart.php">
-                    <p>Votre Panier</p>
+                <a id="cartLink" href="cart.php">
+                    Votre Panier
                 </a>
-                <a href="phpUtils/logout.php">
-                    <p>Se déconnecter</p>
+                <a id="deconnexion" href="phpUtils/logout.php">
+                    Se déconnecter
                 </a>
             </div>
         </section>';
@@ -79,15 +79,15 @@ if (isset($_POST['identifier'], $_POST['password'])) {
         <section id="profileSection">
             <form method="post">
                 <div id="form-wrap">
-                    <h2>Identifiant :</h2>
-                    <input type="text" placeholder="Ex : jo45hn87" name="identifier" id="identifier" class="input-profile">
+                    <h2>Adresse Mail :</h2>
+                    <input type="text" placeholder="Ex : mistergg@gmail.com" name="identifier" id="identifier" class="input-profile">
                 </div>
                 <div id="form-wrap">
                     <h2>Mot de passe :</h2>
                     <input type="password" placeholder="******" name="password" id="password" class="input-profile">
                 </div>
                 <input type="submit" value="Connexion" />
-                <a href="inscription.php">
+                <a id="firstVisit" href="inscription.php">
                     <p>Première visite ? Inscrivez-vous !</p>
                 </a>
             </form>

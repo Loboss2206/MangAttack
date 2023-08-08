@@ -1,18 +1,56 @@
+/* Conteneur principal */
 #summary {
-    padding: 20px;
-    margin: auto;
+    width: 70%; /* Ajuster la largeur selon vos préférences */
+    background-color: rgba(240, 240, 240, 0.8);
+    border-radius: 5px;
 }
 
 #summary h2 {
     font-size: 28px;
     font-weight: bold;
     margin: 20px 0;
+    text-align: center; /* Centrer le titre */
+    color: black;
 }
 
 #summaryContent {
     margin: auto;
     padding: 20px;
-    background-color: #b0a9a9;
+    background-color: #fff; /* Changer la couleur de fond */
     clear: both;
     border-radius: 10px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2); /* Ajouter une ombre légère */
 }
+
+#summaryHeader h3 {
+    text-align: center;
+    margin-bottom: 10px; /* Espacement entre les informations */
+}
+
+.summary-item {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr 1fr; /* Ajuster les proportions des colonnes */
+    align-items: center;
+    grid-gap: 20px;
+    border-bottom: 1px solid #ccc; /* Ajouter une ligne de séparation entre les éléments */
+    padding-bottom: 10px; /* Espacement en bas des éléments */
+}
+
+.summary-item p {
+    margin: 0;
+}
+
+.separator {
+    border-top: 1px solid #ccc;
+    margin: 10px 0;
+}
+
+/* Total et date */
+#totalPrice {
+    text-align: right; /* Aligner le texte à droite */
+}
+
+#totalPrice p {
+    margin: 5px 0;
+}
+

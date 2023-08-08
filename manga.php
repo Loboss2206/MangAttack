@@ -19,6 +19,7 @@ if (isset($_SESSION['identifier'])) {
 } */
 
 if (isset($_POST['add_to_cart'])) {
+    echo 'test';
     $quantity = $_POST['quantity'];
     $tome_id = $_SESSION['tome_id'];
     $cart_id = $resultIdCart[0];
@@ -48,23 +49,25 @@ if (isset($_POST['add_to_cart'])) {
         <section id="grid-presentation">
             <div id="grid">
                 <?php
-                $resultTome = $conn->prepare("SELECT * FROM volume WHERE id = " . $_SESSION['tome_id'] . " ORDER BY id DESC LIMIT 1");
-                $resultTome->execute();
-                $resultTome = $resultTome->fetch(PDO::FETCH_NUM);
+                $resultVolume = $conn->prepare("SELECT * FROM volume WHERE id = " . $_SESSION['tome_id'] . " ORDER BY id DESC LIMIT 1");
+                $resultVolume->execute();
+                $resultVolume = $resultVolume->fetch(PDO::FETCH_NUM);
 
-                $resultManga = $conn->prepare("SELECT * FROM manga WHERE id = " . $resultTome[2] . " ORDER BY id DESC LIMIT 1");
+                $resultManga = $conn->prepare("SELECT * FROM manga WHERE id = " . $resultVolume[2] . " ORDER BY id DESC LIMIT 1");
                 $resultManga->execute();
                 $resultManga = $resultManga->fetch(PDO::FETCH_NUM);
 
-                echo '
-            <img id="img-presentation" src="' . $resultTome[8] . '" alt="' . $resultManga[1] . $resultTome[1] . '">';
+                echo '<img id="img-presentation" src="' . $resultVolume[8] . '" alt="' . $resultManga[1] . $resultVolume[1] . '">';
                 echo '<div id="text-presentation">';
 
                 echo
-                '<h2>Tome ' . $resultTome[1] . ' - ' . $resultManga[1] . '</h2>
-                <h3>' . $resultTome[3] . '</h3>
+                '<div id="titles">
+                <h2>Tome ' . $resultVolume[1] . ' - ' . $resultManga[1] . '</h2>
+                <h3>' . $resultVolume[3] . '</h3>
+                </div>
+                <div id="infos">
                 <p>Auteur : ' . $resultManga[2] . '</p>
-                <p>Prix : ' . $resultTome[4] . '€</p>
+                <p>Prix : ' . $resultVolume[4] . '€</p>
                 <p>Catégorie : ';
 
                 $resultIdCategory = $conn->prepare("SELECT id_category FROM manga_category WHERE id_manga = " . $resultManga[0]);
@@ -73,9 +76,7 @@ if (isset($_POST['add_to_cart'])) {
 
                 $resultCategory = $conn->prepare("SELECT name FROM category WHERE id = " . $resultIdCategory[0]);
                 $resultCategory->execute();
-
                 $resultCategory = $resultCategory->fetch(PDO::FETCH_NUM)[0];
-                echo $resultCategory;
 
                 echo '</p>
                 <p>Genre : ';
@@ -101,10 +102,15 @@ if (isset($_POST['add_to_cart'])) {
                     echo $resultKind;
                 }
 
-                echo '</p>
-                <p>Éditeur : ' . $resultTome[6] . '</p>
-                <p>Nombre de pages : ' . $resultTome[7] . '</p>
-                <p>Disponibilité : En stock</p>'
+                echo '</p>';
+
+                if ($resultVolume[5] > 0) {
+                    echo '<p id="available" style="background-color:cornflowerblue">&#x2713; Cet article est actuellement disponible</p>';
+                } else {
+                    echo '<p id="available" style="background-color:#eb3232">&#x2717; Cet article n\'est actuellement pas disponible</p>';
+                }
+
+                echo '</div>';
                 ?>
 
                 <form method="post" action="manga.php">
@@ -116,21 +122,35 @@ if (isset($_POST['add_to_cart'])) {
                         if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == 1) {
                             echo '<button type="submit" class="grid-item" id="buttonCart" name="add_to_cart">Ajouter au panier</button>';
                         } else {
-                            echo '<button type="button" class="grid-item" id="buttonCart buttonCart_disconnected" name="add_to_cart">Ajouter au panier</button>';
+                            echo '<button type="button" class="grid-item buttonCart_disconnected" id="buttonCart" name="add_to_cart">Ajouter au panier</button>';
                         }
                         ?>
                     </div>
                 </form>
-
             </div>
             </div>
         </section>
         <section id="more-info">
-            <h2 class="title-section">Description</h2>
-            <div id="description">
+            <div class="menu">
+                <button class="menu-item active" data-target="description">Description</button>
+                <button class="menu-item" data-target="details">Details techniques</button>
+                <button class="menu-item" data-target="reviews">Avis</button>
+                <!-- Ajoutez d'autres boutons pour d'autres options si nécessaire -->
+            </div>
+            <div class="box" id="description">
                 <?php echo $resultManga[3] ?>
             </div>
+            <div class="box" id="details" style="display: none;">
+                <?php
+                echo '<p>Éditeur : ' . $resultVolume[6] . '</p>
+                <p>Nombre de pages : ' . $resultVolume[7] . '</p>'
+                ?>
+            </div>
+            <div class="box" id="reviews" style="display: none;">
+                <p>Aucun avis sur ce tome pour le moment...</p>
+            </div>
         </section>
+
 
     </main>
 
@@ -140,8 +160,7 @@ if (isset($_POST['add_to_cart'])) {
     ?>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
-    <script defer="defer" src="./js/manga.js"></script>
-    <script src="js/main.js" type="module"></script>
+    <script src="js/manga.js" type="module"></script>
 </body>
 
 </html>

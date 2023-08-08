@@ -29,7 +29,8 @@ if (isset($_POST['purchaseCart'])) {
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/cart.css">
 
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
     <script defer="defer" src="./js/manga.js"></script>
 </head>
 
@@ -74,12 +75,13 @@ if (isset($_POST['purchaseCart'])) {
                         $img = $resultVolume[8];
 
                         echo '<div class="cart-item">
-                        <img src="' . $img . '" alt="Manga 1">
-                        <div class="cart-item-info">
-                            <h3>' . $name . '</h3>
-                            <p>Quantité : ' . $quantity . '</p>
-                            <p>Prix : ' . $price . '€</p>
-                        </div></div>';
+                                                <img class="img-manga" src="' . $img . '" alt="Manga 1">
+                                                            <h3>' . $name . '</h3>
+                                                            <p>' . $unitPrice . '€</p>
+                                                            <p>' . $quantity . '</p>
+                                                            <p>' . $price . '€</p>
+                                                            <input type="submit" name="remove_cart_item" value="Retirer">
+                                                        </div>';
                         echo "<br>";
                     }
 
@@ -88,25 +90,25 @@ if (isset($_POST['purchaseCart'])) {
                     }
 
                     echo '<div id="cart-total">
-                    <p>Total : ' . $totalPrice . '€</p>
-                    </div>';
+                                                    <p>Total : ' . $totalPrice . '€</p>
+                                                    </div>';
                 ?>
 
-                    <form action="cart.php" method="post">
-                        <input type="submit" name="emptyCart" value="Vider le panier">
-                    </form>
+                <form action="cart.php" method="post">
+                    <input id="emptyCart" type="submit" name="emptyCart" value="Vider le panier">
+                </form>
 
-                    <?php if ($totalPrice != 0) { ?>
+                <?php if ($totalPrice != 0) { ?>
 
-                        <form action="cart.php" method="post">
-                            <input type="submit" name="purchaseCart" value="Passer commande">
-                        </form>
+                <form action="cart.php" method="post">
+                    <input id="orderCart" type="submit" name="purchaseCart" value="Passer commande">
+                </form>
 
-                    <?php } else { ?>
+                <?php } else { ?>
 
-                        <form>
-                            <input type="submit" name="purchaseCart" value="Passer commande">
-                        </form>
+                <form>
+                    <input id="orderCart" type="submit" name="purchaseCart" value="Passer commande">
+                </form>
 
                 <?php }
                 } else {
