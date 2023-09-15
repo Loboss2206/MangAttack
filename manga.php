@@ -19,7 +19,6 @@ if (isset($_SESSION['identifier'])) {
 } */
 
 if (isset($_POST['add_to_cart'])) {
-    echo 'test';
     $quantity = $_POST['quantity'];
     $tome_id = $_SESSION['tome_id'];
     $cart_id = $resultIdCart[0];
@@ -78,6 +77,8 @@ if (isset($_POST['add_to_cart'])) {
                 $resultCategory->execute();
                 $resultCategory = $resultCategory->fetch(PDO::FETCH_NUM)[0];
 
+                echo $resultCategory;
+
                 echo '</p>
                 <p>Genre : ';
 
@@ -102,10 +103,21 @@ if (isset($_POST['add_to_cart'])) {
                     echo $resultKind;
                 }
 
+                if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == 1) {
+                    $resultQuantityCart = $conn->prepare("SELECT quantity FROM cart_volume WHERE id_cart = " . $resultIdCart[0] . " AND id_volume = " . $resultVolume[0]);
+                    $resultQuantityCart->execute();
+                    $quantityVolumeCart = $resultQuantityCart->fetch(PDO::FETCH_NUM)[0];
+                    $quantityLeft = $resultVolume[5] - $quantityVolumeCart;
+                } else {
+                    $quantityLeft = $resultVolume[5];
+                }
+
                 echo '</p>';
 
-                if ($resultVolume[5] > 0) {
+                if ($quantityLeft > 5) {
                     echo '<p id="available" style="background-color:cornflowerblue">&#x2713; Cet article est actuellement disponible</p>';
+                } elseif ($quantityLeft > 0) {
+                    echo '<p id="available" style="background-color:orange">&#x2713; Il ne reste plus que ' . $quantityLeft . ' exemplaire(s)</p>';
                 } else {
                     echo '<p id="available" style="background-color:#eb3232">&#x2717; Cet article n\'est actuellement pas disponible</p>';
                 }
@@ -116,13 +128,18 @@ if (isset($_POST['add_to_cart'])) {
                 <form method="post" action="manga.php">
                     <div id="addToCart">
                         <button class="grid-item buttonChange" id="buttonMinus" type="button">-</button>
-                        <input class="grid-item" id="inputQuantity" type="number" value="1" min="1" name="quantity">
+                        <input class="grid-item" id="inputQuantity" type="number" value="1" min="1"
+                            max=<?php echo $quantityLeft ?> name="quantity">
                         <button class="grid-item buttonChange" id="buttonPlus" type="button">+</button>
                         <?php
-                        if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == 1) {
-                            echo '<button type="submit" class="grid-item" id="buttonCart" name="add_to_cart">Ajouter au panier</button>';
+                        if ($quantityLeft > 0) {
+                            if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == 1) {
+                                echo '<button type="submit" class="grid-item" id="buttonCart" name="add_to_cart">Ajouter au panier</button>';
+                            } else {
+                                echo '<button type="button" class="grid-item buttonCart_disconnected" id="buttonCart" name="add_to_cart">Ajouter au panier</button>';
+                            }
                         } else {
-                            echo '<button type="button" class="grid-item buttonCart_disconnected" id="buttonCart" name="add_to_cart">Ajouter au panier</button>';
+                            echo '<button type="button" class="grid-item" id="buttonCart" name="add_to_cart" disabled=true>Ajouter au panier</button>';
                         }
                         ?>
                     </div>
@@ -147,7 +164,7 @@ if (isset($_POST['add_to_cart'])) {
                 ?>
             </div>
             <div class="box" id="reviews" style="display: none;">
-                <p>Aucun avis sur ce tome pour le moment...</p>
+                <p>Aucun avis pour le moment...</p>
             </div>
         </section>
 
@@ -159,7 +176,9 @@ if (isset($_POST['add_to_cart'])) {
     include_once 'phpUtils/footer.php';
     ?>
 
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous">
+    </script>
     <script src="js/manga.js" type="module"></script>
 </body>
 

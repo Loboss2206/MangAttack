@@ -105,8 +105,10 @@ CREATE TABLE review (
     id SERIAL PRIMARY KEY,
     mail_user VARCHAR(128),
     id_volume INT,
+    title VARCHAR(256),
     score FLOAT,
     comment VARCHAR(2048),
+    date DATE,
     CONSTRAINT fk_mail_user_review FOREIGN KEY (mail_user) REFERENCES user_(mail),
     CONSTRAINT fk_volume_review FOREIGN KEY (id_volume) REFERENCES volume(id)
 );
@@ -138,7 +140,16 @@ VALUES  (1, 1, 'Naruto Uzumaki !!', 3.00, 0, 'Kana', 192, 'https://tse3.mm.bing.
         (1, 4, 'Livre 1', 7.99, 4, 'Kana', 200, 'https://cdn1.booknode.com/book_cover/987/death_note_tome_1-986958-264-432.jpg'),
         (2, 4, 'Livre 2', 7.99, 7, 'Kana', 200, 'https://tse2.mm.bing.net/th?id=OIP.6SiH7DMmEP9yTYOFdgm-oAAAAA&pid=Api&P=0'),
         (1, 12, '', 6.20, 9, 'Delcourt/Tonkam', 192, 'https://m.media-amazon.com/images/I/5131GcTh02L._SX326_BO1,204,203,200_.jpg'), 
-        (2, 12, '', 6.20, 11, 'Delcourt/Tonkam', 186, 'https://m.media-amazon.com/images/I/51XY8XVHMNL._SX326_BO1,204,203,200_.jpg');
+        (2, 12, '', 6.20, 11, 'Delcourt/Tonkam', 186, 'https://m.media-amazon.com/images/I/51XY8XVHMNL._SX326_BO1,204,203,200_.jpg'),
+        (1, 11, '', 12.99, 8, 'Glénat', 240, 'https://media.senscritique.com/media/000005359259/300/berserk.jpg'),
+        (2, 11, '', 12.99, 6, 'Glénat', 240, 'https://media.senscritique.com/media/000019897773/300/berserk_tome_2.jpg'),
+        (3, 11, '', 12.99, 7, 'Glénat', 240, 'https://media.senscritique.com/media/000019619667/300/berserk_tome_3.jpg'),
+        (1, 6, 'The Death And The Strawberry', 6.20, 5, 'Glénat', 200, 'https://media.senscritique.com/media/000009649424/300/The_Death_and_the_Strawberry_Bleach_tome_1.jpg'),
+        (2, 6, 'Goodbye Parakeet, Goodnite My Sista', 6.20, 7, 'Glénat', 200, 'https://media.senscritique.com/media/000009649426/300/Goodbye_Parakeet_Goodnite_my_Sista_Bleach_tome_2.jpg'),
+        (3, 6, 'Memories In The Rain', 6.20, 8, 'Glénat', 200, 'https://media.senscritique.com/media/000009683676/300/Memories_in_the_Rain_Bleach_tome_3.jpg'),
+        (1, 7, 'Sangoku', 2.99, 26, 'Glénat', 192, 'https://cdn1.booknode.com/book_cover/1026/mod11/dragon_ball_tome_1_sangoku-1025617-264-432.jpg'),
+        (2, 7, 'Kaméhaméha', 5.99, 14, 'Glénat', 192, 'https://cdn1.booknode.com/book_cover/1037/mod11/dragon_ball_tome_2_kamehameha-1036724-264-432.jpg'),
+        (3, 7, 'L''initiaition', 5.99, 13, 'Glénat', 192, 'https://cdn1.booknode.com/book_cover/1037/mod11/dragon_ball_tome_3_linitiation-1036726-264-432.jpg');
 
 INSERT INTO category (name)
 VALUES  ('Shonen'), ('Seinen'), ('Shojo'), ('Josei'), ('Kodomo');
@@ -147,16 +158,17 @@ INSERT INTO kind (name)
 VALUES  ('Nekketsu'), ('Aventure'), ('Comédie'), ('Drame'), 
         ('Fantaisie'), ('Romance'), ('Slice of life'), ('Action'), 
         ('Policier'), ('Mystère'), ('Thriller psychologique'), ('Fantastique'), 
-        ('Suiri');
+        ('Suiri'), ('Surnaturel');
 
 INSERT INTO manga_category (id_category, id_manga) 
-VALUES  (1, 1), (1, 2), (1, 4), (3,12);
+VALUES  (1, 1), (1, 2), (1, 4), (1, 6), (1, 7), (2, 11), (3,12);
 
 INSERT INTO manga_kind (id_kind, id_manga) 
 VALUES  (1, 1), (8, 1), (1, 2), (2, 2), (5, 2), (9, 4), 
-        (10, 4), (11, 4), (3, 12), (4, 12), (7, 12);
+        (10, 4), (11, 4), (1, 6), (8, 6), (14, 6), (1, 7), (2, 7), (3, 7), 
+        (2, 11), (4, 11), (5, 11), (3, 12), (4, 12), (7, 12);
 
-INSERT INTO user_ (mail, password, last_name, first_name, address, postal_code, admin)
+INSERT INTO user_ (mail, password, first_name, last_name, address, postal_code, admin)
 VALUES  ('b.logan006@gmail.com', 'Yoloswag06', 'Logan', 'Brunet', '18 rue du Maréchal Feur', '06600', true),
         ('philou225@gmail.com','Yoloswag225','Philippe','Bouillon','90 rue de la Paix', '95600', false),
         ('jeanmi69000@hotmail.com','JM69DP','Jean-Michel','Dupont','1 rue de la République', '69000', false),
@@ -167,6 +179,6 @@ VALUES  ('b.logan006@gmail.com'),
         ('philou225@gmail.com');
 
 INSERT INTO review (mail_user, id_volume, score, comment) 
-VALUES  ('jeanmi69000@hotmail.com', 1, 4.5, 'Très bon tome, je recommande ! La fin m''a epoustouflé !'),
-        ('antolefifou404@outlook.com', 6, 3, 'Tome moyen, je m''attendais à mieux...'),
+VALUES  ('jeanmi69000@hotmail.com', 11, 4.5, 'Très bon tome, je recommande ! La fin m''a epoustouflé !'),
+        ('antolefifou404@outlook.com', 11, 3, 'Tome moyen, je m''attendais à mieux...'),
         ('philou225@gmail.com', 1, 5, 'Tome parfait, rien à redire !');

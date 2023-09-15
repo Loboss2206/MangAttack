@@ -66,15 +66,17 @@ function addToCart($idVolume, $idCart, $quantity)
     $insertInCart->execute();
 }
 
-function emptyCart($idCart) {
+function emptyCart($idCart)
+{
     include('connectDB.php');
     $resultCartVolumeUser = $conn->prepare("DELETE FROM cart_volume WHERE id_cart = " . $idCart);
     $resultCartVolumeUser->execute();
 }
 
-function createSummary($idCart) {
+function createSummary($idCart)
+{
     include('connectDB.php');
-    
+
     $resultMailUser = $conn->prepare("SELECT mail_user FROM cart WHERE id = " . $idCart);
     $resultMailUser->execute();
     $mail_user = $resultMailUser->fetch(PDO::FETCH_NUM)[0];
@@ -125,6 +127,30 @@ function addVolumeToBDD($number, $nameManga, $nameVolume, $price, $quantity, $pu
 
     $insert = $conn->prepare("INSERT INTO volume (number, id_manga, name, price, quantity, publisher, number_pages, img_volume) VALUES ('" . $number . "','" . $resultManga . "','" . $nameVolume . "','" . $price . "','" . $quantity . "','" . $publisher . "','" . $numberPages . "','" . $img . "');");
     $insert->execute();
+}
+
+function removeVolume($idVolume, $quantity)
+{
+    include('connectDB.php');
+    $resultVolumeQuantity = $conn->prepare("SELECT quantity FROM volume WHERE id = '" . $idVolume . "'");
+    $resultVolumeQuantity->execute();
+    $volumeQuantity = $resultVolumeQuantity->fetch(PDO::FETCH_NUM)[0];
+
+    $removeVolumes = $conn->prepare("UPDATE volume SET quantity = '" . $volumeQuantity - $quantity . "' WHERE id = '" . $idVolume . "'");
+    $removeVolumes->execute();
+}
+
+function removeVolumesFromCart($idCart)
+{
+    include('connectDB.php');
+    $resultCartVolume = $conn->prepare("SELECT id_volume, quantity FROM cart_volume WHERE id_cart = '" . $idCart . "'");
+    $resultCartVolume->execute();
+
+    foreach ($resultCartVolume as $row) {
+        $idVolume = $row["id_volume"];
+        $quantity = $row["quantity"];
+        removeVolume($idVolume, $quantity);
+    }
 }
 
 function test_admin($mail)

@@ -52,7 +52,7 @@ include_once 'phpUtils/connectDB.php';
                             echo
                             '<div class="manga">
                             <a href="manga.php?id=' . $rowVolume[0] . '">
-                            <img class="img-manga" src="' . $rowVolume[8] . '" alt="Manga 1">
+                            <img class="img-manga" src="' . $rowVolume[8] . '" alt="' . $resultMangaName[0] . ' ' . $rowVolume[1] . '">
                             <h3>Tome ' . $rowVolume[1] . ' - ' . $resultMangaName[0] . '</h3>
                             <p>Prix : ' . $rowVolume[4] . '€</p>
                             </a>
@@ -75,7 +75,7 @@ include_once 'phpUtils/connectDB.php';
                         echo '<div class="grid-categories">';
                         $left = 6;
                     }
-        
+
                     while ($rowManga = $resultIdMangas->fetch(PDO::FETCH_NUM)) {
                         $resultVolumes = $conn->prepare("SELECT * FROM volume WHERE id_manga = " . $rowManga[0] . " ORDER BY id DESC LIMIT 6");
                         $resultVolumes->execute();
@@ -90,7 +90,7 @@ include_once 'phpUtils/connectDB.php';
                                 echo
                                 '<div class="manga">
                                 <a href="manga.php?id=' . $rowVolume[0] . '">
-                                <img class="img-manga" src="' . $rowVolume[8] . '" alt="Manga 1">
+                                <img class="img-manga" src="' . $rowVolume[8] . '" alt="' . $resultMangaName[0] . ' ' . $rowVolume[1] . '">
                                 <h3>Tome ' . $rowVolume[1] . ' - ' . $resultMangaName[0] . '</h3>
                                 <p>Prix : ' . $rowVolume[4] . '€</p>
                                 </a>

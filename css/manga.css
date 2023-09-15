@@ -34,8 +34,7 @@
 }
 
 #img-presentation {
-    width: 25vw;
-    height: 35vw;
+    width: 20vw;
     margin: auto;
 }
 
@@ -134,4 +133,24 @@ form {
     background-color: rgba(240, 240, 240, 0.9);
     border-top: #000 1px solid;
     border-radius: 0 5px 5px 5px;
+}
+
+/* Styles pour les avis */
+.review {
+    background-color: blue;
+    width: 70%;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.review h4 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.review p {
+    margin: 0;
+    font-size: 16px;
 }

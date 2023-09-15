@@ -34,7 +34,7 @@ include_once 'phpUtils/connectDB.php';
             <h2 class="title-section">Les plus vendus</h2>
             <div id="grid-featured">
                 <?php
-                $resultVolumes = $conn->prepare("SELECT * FROM volume ORDER BY id ASC LIMIT 15");
+                $resultVolumes = $conn->prepare("SELECT * FROM volume ORDER BY id DESC LIMIT 12");
                 $resultVolumes->execute();
 
                 while ($row = $resultVolumes->fetch(PDO::FETCH_NUM)) {
@@ -44,7 +44,7 @@ include_once 'phpUtils/connectDB.php';
 
                     echo
                     '<a href="manga.php?id=' . $row[0] . '" class="manga">
-                        <img class="img-manga" src="' . $row[8] . '" alt="Manga 1">
+                        <img class="img-manga" src="' . $row[8] . '" alt="' . $resultMangaName[0] . ' ' . $row[1] . '">
                         <h3>Tome ' . $row[1] . ' - ' . $resultMangaName[0] . '</h3>
                         <p>Prix : ' . $row[4] . '€</p>
                     </a>';

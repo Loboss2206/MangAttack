@@ -1,10 +1,32 @@
+html,
+body {
+    min-height: 100%;
+    height: 100%;
+    background-color: #eee45c;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex-grow: 1;
+    overflow: hidden;
+}
+
 .title-section {
     margin: auto;
     padding: 10px 20px;
     text-align: center;
-    background-color:rgba(90, 85, 85, 0.9);
+    background-color: rgba(90, 85, 85, 0.9);
     width: fit-content;
     border-radius: 25px;
+}
+
+#profileSection {
+    /* Positionner au milieu du main */
+    margin: auto;
 }
 
 form {
@@ -14,7 +36,7 @@ form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 20px auto;
+    margin: auto;
     max-width: 50vw;
     padding: 20px;
 }
@@ -59,7 +81,8 @@ a#firstVisit {
     font-size: 18px;
 }
 
-a#cartLink, a#deconnexion {
+a#cartLink,
+a#deconnexion {
     margin: 10px;
     padding: 10px 20px;
     background-color: #333;
@@ -73,7 +96,8 @@ a#cartLink, a#deconnexion {
     text-decoration: none;
 }
 
-a#cartLink:hover, a#deconnexion:hover {
+a#cartLink:hover,
+a#deconnexion:hover {
     background-color: #222;
 }
 
