@@ -15,10 +15,15 @@ if (isset($_POST['emptyCart'])) {
 }
 
 if (isset($_POST['purchaseCart'])) {
-    removeVolumesFromCart($idCart);
-    createSummary($idCart);
-    emptyCart($idCart);
-    header("Location: summary.php");
+    if (isAllAvailable($idCart)) {
+        removeVolumesFromCart($idCart);
+        createSummary($idCart);
+        emptyCart($idCart);
+        header("Location: summary.php");
+    } else {
+        echo '<script> alert("Un ou plusieurs articles ne sont plus disponibles"); </script>';
+        removeItemsUnavailable($idCart);
+    }
 }
 ?>
 

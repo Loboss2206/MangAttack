@@ -121,13 +121,15 @@ function createSummary($idCart)
 function addVolumeToBDD($number, $nameManga, $nameVolume, $price, $quantity, $publisher, $numberPages, $img)
 {
     include('connectDB.php');
-    $resultManga = $conn->prepare("SELECT id FROM manga WHERE name = '" . $nameManga . "'");
-    $resultManga->execute();
+
+    $resultManga = $conn->prepare("SELECT id FROM manga WHERE name = ?");
+    $resultManga->execute([$nameManga]);
     $resultManga = $resultManga->fetch(PDO::FETCH_NUM)[0];
 
-    $insert = $conn->prepare("INSERT INTO volume (number, id_manga, name, price, quantity, publisher, number_pages, img_volume) VALUES ('" . $number . "','" . $resultManga . "','" . $nameVolume . "','" . $price . "','" . $quantity . "','" . $publisher . "','" . $numberPages . "','" . $img . "');");
-    $insert->execute();
+    $insert = $conn->prepare("INSERT INTO volume (number, id_manga, name, price, quantity, publisher, number_pages, img_volume) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $insert->execute([$number, $resultManga, $nameVolume, $price, $quantity, $publisher, $numberPages, $img]);
 }
+
 
 function removeVolume($idVolume, $quantity)
 {
@@ -161,4 +163,47 @@ function test_admin($mail)
     $resultAdmin = $resultAdmin->fetch(PDO::FETCH_NUM)[0];
 
     return $resultAdmin;
+}
+
+function isAllAvailable($idCart)
+{
+    include('connectDB.php');
+    $resultCartVolume = $conn->prepare("SELECT id_volume, quantity FROM cart_volume WHERE id_cart = '" . $idCart . "'");
+    $resultCartVolume->execute();
+
+    foreach ($resultCartVolume as $row) {
+        $idVolume = $row["id_volume"];
+        $quantity = $row["quantity"];
+
+        $resultVolumeQuantity = $conn->prepare("SELECT quantity FROM volume WHERE id = '" . $idVolume . "'");
+        $resultVolumeQuantity->execute();
+        $volumeQuantity = $resultVolumeQuantity->fetch(PDO::FETCH_NUM)[0];
+
+        if ($volumeQuantity < $quantity) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+function removeItemsUnavailable($idCart)
+{
+    include('connectDB.php');
+    $resultCartVolume = $conn->prepare("SELECT id_volume, quantity FROM cart_volume WHERE id_cart = '" . $idCart . "'");
+    $resultCartVolume->execute();
+
+    foreach ($resultCartVolume as $row) {
+        $idVolume = $row["id_volume"];
+        $quantity = $row["quantity"];
+
+        $resultVolumeQuantity = $conn->prepare("SELECT quantity FROM volume WHERE id = '" . $idVolume . "'");
+        $resultVolumeQuantity->execute();
+        $volumeQuantity = $resultVolumeQuantity->fetch(PDO::FETCH_NUM)[0];
+
+        if ($volumeQuantity < $quantity) {
+            $deleteVolume = $conn->prepare("DELETE FROM cart_volume WHERE id_volume = '" . $idVolume . "' AND id_cart = '" . $idCart . "'");
+            $deleteVolume->execute();
+        }
+    }
 }

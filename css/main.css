@@ -1,9 +1,16 @@
+html,
+body {
+    height: 100%;
+}
+
 /* Styles pour le body, header, footer et h1 */
 body {
     font-family: 'Helvetica Neue', Arial, sans-serif;
     margin: 0;
     background-color: #f8f8f8;
-    /* Couleur de fond du body */
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 header,
@@ -12,24 +19,23 @@ footer {
     color: #fff;
     display: flex;
     justify-content: space-between;
-    padding: 10px;
+    padding: 1.5vh;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 h1 {
     margin: auto 10px;
     font-size: 28px;
-    /* Réduire la taille du titre principal */
 }
 
 /* Styles pour le main et la section du titre */
 main {
     background-image: url('../img/wallpaper.jpg');
-    /* Changer l'image de fond */
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
     padding: 20px;
+    flex: 1;
 }
 
 section {
@@ -40,10 +46,8 @@ section {
 .title-section {
     color: white;
     font-size: 32px;
-    /* Augmenter la taille du titre de section */
     font-weight: bold;
     margin: 20px 10px;
-    /* Augmenter l'espace sous le titre */
 }
 
 /* Styles pour la navigation */

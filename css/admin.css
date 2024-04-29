@@ -8,10 +8,11 @@ section#addToDB {
 /* Styles pour la grille principale */
 #gridAdmin {
     display: grid;
-    grid-template-columns: 20vw 30vw;
+    grid-template-columns: 30vw 40vw;
     grid-template-rows: 1fr 1fr;
     margin: 20px auto;
     background-color: aqua;
+    width: 70vw;
 }
 
 /* Styles pour le formulaire */
@@ -21,15 +22,16 @@ form {
     display: flex;
     flex-direction: column;
     align-items: left;
-    width: 20vw;
+    width: 30vw;
+    align-items: center;
 }
 
 .form-wrap {
-    padding-left: 1vw;
     margin-top: 5px;
 }
 
 .form-wrap h2 {
+    margin-left: 0;
     margin-bottom: 5px;
     font-size: 1.5vw;
 }

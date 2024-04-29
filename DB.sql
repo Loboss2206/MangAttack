@@ -33,7 +33,7 @@ CREATE TABLE volume (
     quantity INT,
     publisher VARCHAR(64),
     number_pages INT,
-    img_volume VARCHAR(512),
+    img_volume VARCHAR(64000),
     CONSTRAINT fk_manga_volume FOREIGN KEY (id_manga) REFERENCES manga(id)
 );
 
@@ -178,7 +178,7 @@ INSERT INTO cart (mail_user)
 VALUES  ('b.logan006@gmail.com'),
         ('philou225@gmail.com');
 
-INSERT INTO review (mail_user, id_volume, score, comment) 
-VALUES  ('jeanmi69000@hotmail.com', 11, 4.5, 'Très bon tome, je recommande ! La fin m''a epoustouflé !'),
-        ('antolefifou404@outlook.com', 11, 3, 'Tome moyen, je m''attendais à mieux...'),
-        ('philou225@gmail.com', 1, 5, 'Tome parfait, rien à redire !');
+INSERT INTO review (mail_user, id_volume, title, score, date, comment) 
+VALUES  ('jeanmi69000@hotmail.com', 11, 'Excellent tome !!!', 4, '2023-06-22', 'Très bon tome, je recommande ! La fin m''a epoustouflé !'),
+        ('antolefifou404@outlook.com', 11, 'Mitigé...', 3, '2023-02-12', 'Tome moyen, je m''attendais à mieux...'),
+        ('philou225@gmail.com', 1, 'ACHAT RENTABLE, JE CONSEILLE', 5, '2023-04-01', 'Tome parfait, rien à redire !');

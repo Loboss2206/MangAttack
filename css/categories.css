@@ -1,5 +1,5 @@
-/* styles pour les catégories */
 .grid-categories {
+    /* Vos styles actuels restent inchangés */
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 20px;
@@ -9,6 +9,7 @@
     clear: both;
     border-radius: 10px;
 }
+
 
 /* Réduire le nombre de colonnes en fonction de la taille de la page */
 @media (min-width: 1200px) {

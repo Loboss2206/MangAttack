@@ -34,7 +34,7 @@ if (
         addVolumeToBDD($_POST["numberVolume"], $_POST["mangaName"], $_POST["nameVolume"], $_POST["price"], $_POST["quantity"], $_POST["publisher"], $_POST["numberPages"], $_POST["imgURL"]);
         echo '<script> alert("Tome ajouté à la base de données"); </script>';
     } else {
-        # echo '<script> alert("Veuillez remplir tous les champs"); </script>';
+        echo '<script> alert("Veuillez remplir tous les champs"); </script>';
     }
 }
 ?>
@@ -103,7 +103,6 @@ if (
                         <input type="number" name="numberPages" id="numberPages" class="input-manga">
                     </div>
 
-
                     <input type="submit" name="submitVolume" id="submitVolume" value="Ajouter dans la base de données" />
                 </form>
                 <div id="divImgPreview">
@@ -112,6 +111,8 @@ if (
                 </div>
             </div>
         </section>
+
+        <p>Manage users</p>
     </main>
 
     <!-- Footer -->

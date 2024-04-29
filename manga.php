@@ -128,8 +128,7 @@ if (isset($_POST['add_to_cart'])) {
                 <form method="post" action="manga.php">
                     <div id="addToCart">
                         <button class="grid-item buttonChange" id="buttonMinus" type="button">-</button>
-                        <input class="grid-item" id="inputQuantity" type="number" value="1" min="1"
-                            max=<?php echo $quantityLeft ?> name="quantity">
+                        <input class="grid-item" id="inputQuantity" type="number" value="1" min="1" max=<?php echo $quantityLeft ?> name="quantity">
                         <button class="grid-item buttonChange" id="buttonPlus" type="button">+</button>
                         <?php
                         if ($quantityLeft > 0) {
@@ -149,12 +148,12 @@ if (isset($_POST['add_to_cart'])) {
         </section>
         <section id="more-info">
             <div class="menu">
-                <button class="menu-item active" data-target="description">Description</button>
+                <button class="menu-item" data-target="description">Description</button>
                 <button class="menu-item" data-target="details">Details techniques</button>
-                <button class="menu-item" data-target="reviews">Avis</button>
+                <button class="menu-item active" data-target="reviews">Avis</button>
                 <!-- Ajoutez d'autres boutons pour d'autres options si nécessaire -->
             </div>
-            <div class="box" id="description">
+            <div class="box" id="description" style="display: none;">
                 <?php echo $resultManga[3] ?>
             </div>
             <div class="box" id="details" style="display: none;">
@@ -163,8 +162,43 @@ if (isset($_POST['add_to_cart'])) {
                 <p>Nombre de pages : ' . $resultVolume[7] . '</p>'
                 ?>
             </div>
-            <div class="box" id="reviews" style="display: none;">
-                <p>Aucun avis pour le moment...</p>
+            <div class="box" id="reviews">
+                <?php
+                $resultReviews = $conn->prepare("SELECT * FROM review WHERE id_volume = " . $resultVolume[0]);
+                $resultReviews->execute();
+
+                if ($resultReviews->rowCount() == 0) {
+                    echo 'Aucun avis pour le moment...';
+                } else {
+                    print($resultReviews->rowCount() . ' avis');
+
+                    while ($row = $resultReviews->fetch(PDO::FETCH_NUM)) {
+                        $mailUser = $row[1];
+                        $resultUser = $conn->prepare("SELECT * FROM user_ WHERE mail = '" . $mailUser . "'");
+                        $resultUser->execute();
+                        $resultUser = $resultUser->fetch(PDO::FETCH_NUM);
+
+                        $firstName = $resultUser[2];
+                        $lastName = $resultUser[3];
+                        $title = $row[3];
+                        $score = $row[4];
+                        $comment = $row[5];
+                        $date = $row[6];
+                        $dateFormat = date("d/m/Y", strtotime($date));
+
+                        echo '<div class="review">';
+                        echo '<h4>' . $title . ' ';
+
+                        for ($i = 0; $i < $score; $i++) {
+                            echo '&#9733';
+                        }
+                        echo '</h4>';
+                        echo '<br><p id="comment">' . $comment . '</p><br>';
+                        echo 'Par ' . $lastName . ' ' . $firstName . ', le ' . $dateFormat . '<br>';
+                        echo '</div>';
+                    }
+                }
+                ?>
             </div>
         </section>
 
@@ -176,8 +210,7 @@ if (isset($_POST['add_to_cart'])) {
     include_once 'phpUtils/footer.php';
     ?>
 
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
-        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous">
     </script>
     <script src="js/manga.js" type="module"></script>
 </body>
